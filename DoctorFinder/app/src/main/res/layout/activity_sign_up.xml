@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backgrad"
+    tools:context="capstone.com.doctorfinder.SignUpActivity">
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@mipmap/doctorfinder"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/transparent_background"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
+            <AutoCompleteTextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+                android:hint="Full name"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_white"
+                android:drawablePadding="5dp"
+                android:paddingStart="10dp"
+                android:paddingLeft="@null"
+                />
+            <AutoCompleteTextView
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/ic_phone_black_24dp"
+                android:hint="5XXXXXXXXXX"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_white"
+                android:drawablePadding="5dp"
+                android:paddingStart="10dp"
+                android:paddingLeft="@null"
+                />
+            <AutoCompleteTextView
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/ic_lock_black_24dp"
+                android:hint="Password"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_white"
+                android:drawablePadding="5dp"
+                android:paddingStart="10dp"
+                android:paddingLeft="@null"
+                android:inputType="textPassword"
+                />
+            <AutoCompleteTextView
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/ic_email_black_24dp"
+                android:hint="Email"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_white"
+                android:drawablePadding="5dp"
+                android:paddingStart="10dp"
+                android:paddingLeft="@null"
+                />
+
+
+            <Button
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="@string/sign_up"
+                android:textSize="17sp"
+                android:paddingRight="40dp"
+                android:paddingLeft="40dp"
+                android:textStyle="normal"
+                android:textColor="#fff"
+                android:background="@drawable/button_background"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>
