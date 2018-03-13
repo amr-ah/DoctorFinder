@@ -23,15 +23,15 @@
         android:layout_marginEnd="15dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
-        android:hint="Full name"
+        android:drawableLeft="@drawable/ic_description_black_24dp"
+        android:hint="Bio"
         android:textSize="15sp"
         android:background="@drawable/rounded_white"
         android:drawablePadding="5dp"
         android:paddingStart="10dp"
         android:paddingLeft="@null"
         />
-    
+
 
 
 
