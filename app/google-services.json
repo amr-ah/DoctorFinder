@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "427470019034",
+    "firebase_url": "https://splendid-window-195220.firebaseio.com",
+    "project_id": "splendid-window-195220",
+    "storage_bucket": "splendid-window-195220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427470019034:android:8caae5cbd58bcfd4",
+        "android_client_info": {
+          "package_name": "capstone.com.doctorfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427470019034-jl1l03ii2nt023roc94mrp6m7fugoof5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEGqtfkbhY-Qw8a8gcnrgLbtar9-WtHOk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
