@@ -34,20 +34,23 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         mSwitchMultiButton = findViewById(R.id.radioDoc);
         mSwitchMultiButton.setText("Patient","Doctor");
 
-        SignUpButton =(Button)findViewById(R.id.SignUpButton);
+
         FirstNameTextView =(AutoCompleteTextView) findViewById(R.id.FirstNameTextView);
         EmailTextView =(AutoCompleteTextView) findViewById(R.id.EmailTextView);
         PasswordTextView =(AutoCompleteTextView) findViewById(R.id.PasswordTextView);
         PhoneNumberTextView =(AutoCompleteTextView) findViewById(R.id.PhoneNumberTextView);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-
-
-        SignUpButton.setOnClickListener(this);
+        SignUpButton =(Button)findViewById(R.id.SignUpButton);
+        SignUpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                RegisterUser();
+            }
+        });
     }
 
     private void RegisterUser()
@@ -56,12 +59,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String Password = PasswordTextView.getText().toString().trim();
         if(TextUtils.isEmpty(Email))
         {
-            Toast.makeText(this,"please enter E-mail",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"please enter E-mail",Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(Password))
         {
-            Toast.makeText(this,"please enter your Password",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"please enter your Password",Toast.LENGTH_SHORT).show();
             return;
         }
         firebaseAuth.createUserWithEmailAndPassword(Email,Password)
@@ -70,12 +73,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task)
                     {
-                        Toast.makeText(SignUpActivity.this,"completed",Toast.LENGTH_SHORT);
                         if(task.isSuccessful())
                         {
                             //user successfully registered
-                            //TO-DO
-                            Toast.makeText(SignUpActivity.this,"successful",Toast.LENGTH_SHORT);
+
+                            Toast.makeText(SignUpActivity.this,"Sign up completed",Toast.LENGTH_SHORT).show();
+                            //TO-DO  user should be redirected to the login page here
+
 
                         }
                     }
@@ -85,10 +89,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v)
     {
-        if(v==SignUpButton)
-        {
-            RegisterUser();
-        }
+      if(v==SignUpButton)
+       {
+           RegisterUser();
+       }
 
     }
 }
