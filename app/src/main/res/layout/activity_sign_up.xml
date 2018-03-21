@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/backgradiant"
+    android:orientation="vertical"
     tools:context="capstone.com.doctorfinder.SignUpActivity">
     <LinearLayout
-        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingTop="10dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="100dp"
@@ -25,12 +25,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp">
+            android:orientation="vertical">
 
             <AutoCompleteTextView
-                android:id="@+id/FirstNameTextView"
+                android:id="@+id/FullNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginEnd="15dp"
@@ -90,11 +90,11 @@
                 android:paddingStart="10dp"
                 android:textSize="15sp" />
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,16 +103,16 @@
                     android:textSize="17sp"/>
 
                 <lib.kingja.switchbutton.SwitchMultiButton
-                    android:layout_marginTop="10dp"
                     android:id="@+id/radioDoc"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:padding="8dp"
+                    app:selectedColor="@color/colorPrimaryDark"
+                    app:selectedTab="0"
                     app:strokeRadius="40dp"
                     app:strokeWidth="1dp"
-                    app:selectedTab="0"
-                    app:selectedColor="@color/colorPrimaryDark"
                     app:textSize="18sp" />
             </LinearLayout>
 

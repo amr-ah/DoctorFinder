@@ -32,18 +32,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         firebaseAuth = firebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser()!= null)
-        {
-            //redirect to the search page(initial page for the user after log in) because user is already signed in
-        }
 
-        LoginButton =(Button)findViewById(R.id.SignUpButton);
+        LoginButton = (Button) findViewById(R.id.LoginButton);
         LoginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Patientlogin();
             }
         });
-
 
 
     }
@@ -69,19 +64,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        Toast.makeText(LoginActivity.this, "Signing in", Toast.LENGTH_SHORT).show();
+
         firebaseAuth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
             {
-                if(task.isSuccessful())
-                {
+                if(task.isSuccessful()) {
                     //user successfully registered
 
-                    Toast.makeText(LoginActivity.this,"Signing in",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "done", Toast.LENGTH_SHORT).show();
                     //TO-DO  user should be redirected to the search page(initial page for the user after log in)
 
 
+                } else {
+                    Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

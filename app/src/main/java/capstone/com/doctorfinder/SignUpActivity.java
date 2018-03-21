@@ -20,7 +20,7 @@ import lib.kingja.switchbutton.SwitchMultiButton;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button SignUpButton;
-    private AutoCompleteTextView FirstNameTextView;
+    private AutoCompleteTextView FullNameTextView;
     private AutoCompleteTextView EmailTextView;
     private AutoCompleteTextView PasswordTextView;
     private AutoCompleteTextView PhoneNumberTextView;
@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mSwitchMultiButton.setText("Patient","Doctor");
 
 
-        FirstNameTextView =(AutoCompleteTextView) findViewById(R.id.FirstNameTextView);
+        FullNameTextView = (AutoCompleteTextView) findViewById(R.id.FullNameTextView);
         EmailTextView =(AutoCompleteTextView) findViewById(R.id.EmailTextView);
         PasswordTextView =(AutoCompleteTextView) findViewById(R.id.PasswordTextView);
         PhoneNumberTextView =(AutoCompleteTextView) findViewById(R.id.PhoneNumberTextView);
@@ -48,25 +48,49 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         SignUpButton =(Button)findViewById(R.id.SignUpButton);
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                RegisterUser();
+                if (mSwitchMultiButton.getSelectedTab() == 0) {
+                    RegisterPatient();
+                } else {
+                    //redirect to doctor doctor's sign up page and send Email and password information
+                }
+
             }
         });
     }
 
-    private void RegisterUser()
+    private void RegisterPatient()
     {
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
+
+        //not used yet
+        String FullName = FullNameTextView.getText().toString().trim();
+        String PhoneNumber = PhoneNumberTextView.getText().toString().trim();
+
+        //TO-DO
+        //make sure that user enters a valid email and phone number
+
+
+        if (TextUtils.isEmpty(FullName)) {
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(TextUtils.isEmpty(Email))
         {
-            Toast.makeText(this,"please enter E-mail",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter E-mail", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(Password))
         {
-            Toast.makeText(this,"please enter your Password",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(PhoneNumber)) {
+            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
         firebaseAuth.createUserWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                 {
@@ -76,11 +100,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         if(task.isSuccessful())
                         {
                             //user successfully registered
-
                             Toast.makeText(SignUpActivity.this,"Sign up completed",Toast.LENGTH_SHORT).show();
                             //TO-DO  user should be redirected to the login page here
-
-
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -89,9 +112,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v)
     {
-      if(v==SignUpButton)
-       {
-           RegisterUser();
+      if(v==SignUpButton) {
        }
 
     }
