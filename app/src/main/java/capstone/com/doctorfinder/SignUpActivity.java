@@ -67,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String FullName = FullNameTextView.getText().toString().trim();
         String PhoneNumber = PhoneNumberTextView.getText().toString().trim();
 
-        //TO-DO
+        //TODO
         //make sure that user enters a valid email and phone number
 
 
@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         {
                             //user successfully registered
                             Toast.makeText(SignUpActivity.this,"Sign up completed",Toast.LENGTH_SHORT).show();
-                            //TO-DO  user should be redirected to the login page here
+                            //TODO  user should be redirected to the login page here
                         } else {
                             Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
                         }
