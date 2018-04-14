@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "427470019034-9ivc3qbjrjrps0jpeelcakf9vibcq11j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "capstone.com.doctorfinder",
+            "certificate_hash": "cc0d6815dcb53d75727778cbab0785c1d58a20e8"
+          }
+        },
+        {
           "client_id": "427470019034-jl1l03ii2nt023roc94mrp6m7fugoof5.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427470019034-jl1l03ii2nt023roc94mrp6m7fugoof5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
