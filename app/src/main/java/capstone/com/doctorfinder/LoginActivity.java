@@ -75,8 +75,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //user successfully registered
 
                     Toast.makeText(LoginActivity.this, "done", Toast.LENGTH_SHORT).show();
-                    //TODO  user should be redirected to the search page(initial page for the user after log in)
-
+                    //TODO  user should be redirected to the search page(initial page for the user after log in)\
+                    Intent login = new Intent(LoginActivity.this,user_main.class);
+                    startActivity(login);
 
                 } else {
                     Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package capstone.com.doctorfinder;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import lib.kingja.switchbutton.SwitchMultiButton;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button SignUpButton;
     private AutoCompleteTextView FullNameTextView;
@@ -29,6 +32,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private FirebaseAuth firebaseAuth;
 
+    private DatabaseReference mDatabase;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,29 +43,33 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         firebaseAuth = FirebaseAuth.getInstance();
 
         mSwitchMultiButton = findViewById(R.id.radioDoc);
-        mSwitchMultiButton.setText("Patient","Doctor");
+        mSwitchMultiButton.setText("Patient", "Doctor");
 
 
         FullNameTextView = (AutoCompleteTextView) findViewById(R.id.FullNameTextView);
-        EmailTextView =(AutoCompleteTextView) findViewById(R.id.EmailTextView);
-        PasswordTextView =(AutoCompleteTextView) findViewById(R.id.PasswordTextView);
-        PhoneNumberTextView =(AutoCompleteTextView) findViewById(R.id.PhoneNumberTextView);
+        EmailTextView = (AutoCompleteTextView) findViewById(R.id.EmailTextView);
+        PasswordTextView = (AutoCompleteTextView) findViewById(R.id.PasswordTextView);
+        PhoneNumberTextView = (AutoCompleteTextView) findViewById(R.id.PhoneNumberTextView);
 
-        SignUpButton =(Button)findViewById(R.id.SignUpButton);
+        SignUpButton = (Button) findViewById(R.id.SignUpButton);
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mSwitchMultiButton.getSelectedTab() == 0) {
                     RegisterPatient();
+                    Intent login = new Intent(SignUpActivity.this, LoginActivity.class);
+                    startActivity(login);
                 } else {
-                    //redirect to doctor doctor's sign up page and send Email and password information
+                    //TODO figure how to send email and password information to the other activity
+                    Intent doctor_signup = new Intent(SignUpActivity.this, DoctorSignup.class);
+                    startActivity(doctor_signup);
+
                 }
 
             }
         });
     }
 
-    private void RegisterPatient()
-    {
+    private void RegisterPatient() {
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
@@ -67,21 +77,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String FullName = FullNameTextView.getText().toString().trim();
         String PhoneNumber = PhoneNumberTextView.getText().toString().trim();
 
-        //TODO
-        //make sure that user enters a valid email and phone number
-
+        //TODO make sure that user enters a valid email and phone number
 
         if (TextUtils.isEmpty(FullName)) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(Email))
-        {
+        if (TextUtils.isEmpty(Email)) {
             Toast.makeText(this, "Please enter E-mail", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(Password))
-        {
+        if (TextUtils.isEmpty(Password)) {
             Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -91,18 +97,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-        firebaseAuth.createUserWithEmailAndPassword(Email,Password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
-                {
+        firebaseAuth.createUserWithEmailAndPassword(Email, Password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task)
-                    {
-                        if(task.isSuccessful())
-                        {
-                            //user successfully registered
-                            Toast.makeText(SignUpActivity.this,"Sign up completed",Toast.LENGTH_SHORT).show();
-                            //TODO  user should be redirected to the login page here
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(SignUpActivity.this, "Sign up completed", Toast.LENGTH_SHORT).show();
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullNameTextView.getText().toString().trim());
+                            mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(PhoneNumberTextView.getText().toString().trim());
                         } else {
+
                             Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -110,10 +116,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onClick(View v)
-    {
-      if(v==SignUpButton) {
-       }
+    public void onClick(View v) {
+        if (v == SignUpButton) {
+        }
 
     }
 }
