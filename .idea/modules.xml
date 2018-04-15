@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/Doctor-Finder.iml" filepath="$PROJECT_DIR$/Doctor-Finder.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Doctor-Finder.iml" filepath="$PROJECT_DIR$/.idea/Doctor-Finder.iml" />
+>>>>>>> 532a0d47984bffb592a462a1609afefaf0c9e136
 =======
       <module fileurl="file://$PROJECT_DIR$/.idea/Doctor-Finder.iml" filepath="$PROJECT_DIR$/.idea/Doctor-Finder.iml" />
 >>>>>>> 532a0d47984bffb592a462a1609afefaf0c9e136
