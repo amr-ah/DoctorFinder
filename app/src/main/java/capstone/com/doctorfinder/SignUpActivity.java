@@ -56,8 +56,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onClick(View v) {
                 if (mSwitchMultiButton.getSelectedTab() == 0) {
                     RegisterPatient();
-                    Intent login = new Intent(SignUpActivity.this, LoginActivity.class);
-                    startActivity(login);
                 } else {
                     //TODO figure how to send email and password information to the other activity
                     Intent doctor_signup = new Intent(SignUpActivity.this, DoctorSignup.class);
@@ -107,6 +105,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             mDatabase = FirebaseDatabase.getInstance().getReference();
                             mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullNameTextView.getText().toString().trim());
                             mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(PhoneNumberTextView.getText().toString().trim());
+                            Intent login = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(login);
                         } else {
 
                             Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();

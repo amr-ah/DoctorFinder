@@ -58,6 +58,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this,"please enter E-mail",Toast.LENGTH_SHORT).show();
             return;
         }
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
+            Toast.makeText(this,"E-mail format is incorrect",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if(TextUtils.isEmpty(Password))
         {
             Toast.makeText(this,"please enter your Password",Toast.LENGTH_SHORT).show();
@@ -75,12 +80,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //user successfully registered
 
                     Toast.makeText(LoginActivity.this, "done", Toast.LENGTH_SHORT).show();
-                    //TODO  user should be redirected to the search page(initial page for the user after log in)\
                     Intent login = new Intent(LoginActivity.this,user_main.class);
                     startActivity(login);
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Email and password don't match", Toast.LENGTH_SHORT).show();
                 }
             }
         });
