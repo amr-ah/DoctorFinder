@@ -22,6 +22,11 @@ import lib.kingja.switchbutton.SwitchMultiButton;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String EXTRA_EMAIL = "SIGNUP_EXTRA_EMAIL";
+    public static final String EXTRA_PASS = "SIGNUP_EXTRA_PASS";
+    public static final String EXTRA_NAME = "SIGNUP_EXTRA_NAME";
+    public static final String EXTRA_NUM = "SIGNUP_EXTRA_NUM";
+
     private Button SignUpButton;
     private AutoCompleteTextView FullNameTextView;
     private AutoCompleteTextView EmailTextView;
@@ -57,8 +62,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if (mSwitchMultiButton.getSelectedTab() == 0) {
                     RegisterPatient();
                 } else {
-                    //TODO figure how to send email and password information to the other activity
+                    String Email = EmailTextView.getText().toString().trim();
+                    String Password = PasswordTextView.getText().toString().trim();
+
                     Intent doctor_signup = new Intent(SignUpActivity.this, DoctorSignup.class);
+
+                    doctor_signup.putExtra("SIGNUP_EXTRA_EMAIL",Email);
+                    doctor_signup.putExtra("SIGNUP_EXTRA_PASS",Password);
+                    doctor_signup.putExtra("SIGNUP_EXTRA_NAME",FullNameTextView.getText().toString().trim());
+                    doctor_signup.putExtra("SIGNUP_EXTRA_NUM",PhoneNumberTextView.getText().toString().trim());
+
                     startActivity(doctor_signup);
 
                 }
@@ -75,14 +88,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String FullName = FullNameTextView.getText().toString().trim();
         String PhoneNumber = PhoneNumberTextView.getText().toString().trim();
 
-        //TODO make sure that user enters a valid email and phone number
-
         if (TextUtils.isEmpty(FullName)) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(Email)) {
             Toast.makeText(this, "Please enter E-mail", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
+            Toast.makeText(this,"E-mail format is incorrect",Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(Password)) {
