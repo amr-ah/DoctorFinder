@@ -32,15 +32,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         firebaseAuth = firebaseAuth.getInstance();
 
-
         LoginButton = (Button) findViewById(R.id.LoginButton);
         LoginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Patientlogin();
             }
         });
-
-
     }
 
     public void toSignUp(View view) {
