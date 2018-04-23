@@ -14,6 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -22,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button LoginButton;
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,21 +79,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
             {
-                if(task.isSuccessful()) {
-                    //user successfully registered
+                if(task.isSuccessful())
+                {
 
-                    Toast.makeText(LoginActivity.this, "done", Toast.LENGTH_SHORT).show();
-                    Intent login = new Intent(LoginActivity.this,user_main.class);
-                    startActivity(login);
+                    //TODO check if the type of the email and password is a doctor or patient to redirect to the proper page
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+                    mDatabase.child("patients").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot)
+                        {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                            {
+
+                               String U_ID = firebaseAuth.getCurrentUser().getUid();
+                               //makeText(LoginActivity.this,"snapshotkey ="+snapshot.getKey(), Toast.LENGTH_SHORT).show();
+                               //Toast.makeText(LoginActivity.this,"U_ID"+U_ID, Toast.LENGTH_SHORT).show();
+                                EmailTextView.setText("U_ID"+U_ID);
+                                //PasswordTextView.setText();
+                                if(snapshot.getKey()== U_ID)
+                                {
+                                    Intent login = new Intent(LoginActivity.this,user_main.class);
+                                    startActivity(login);
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError)
+                        {
+
+                        }
+
+                });
+
+
+                           // Toast.makeText(LoginActivity.this, "done", Toast.LENGTH_SHORT).show();
+                    //Intent login = new Intent(LoginActivity.this,user_main.class);
+                    //startActivity(login);
 
                 } else {
                     Toast.makeText(LoginActivity.this, "Email and password don't match", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
-
 
     }
 

@@ -36,7 +36,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private SwitchMultiButton mSwitchMultiButton;
 
     private FirebaseAuth firebaseAuth;
-
     private DatabaseReference mDatabase;
 
 
