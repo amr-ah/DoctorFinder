@@ -119,18 +119,16 @@ public class DoctorSignup extends AppCompatActivity {
             Toast.makeText(this, "Please enter your bio", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (swipeSelector.getSelectedItem().value.toString() == "0") {
+        if ((int)swipeSelector.getSelectedItem().value == 0) {
             Toast.makeText(this, "Please select your category", Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         firebaseAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
 
                             Toast.makeText(DoctorSignup.this, "Sign up completed", Toast.LENGTH_SHORT).show();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
