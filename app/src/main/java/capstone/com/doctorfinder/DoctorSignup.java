@@ -23,12 +23,19 @@ import com.roughike.swipeselector.SwipeSelector;
 
 public class DoctorSignup extends AppCompatActivity {
 
+    private SwipeSelector swipeSelector;
     private MultiAutoCompleteTextView AddressTextView;
     private AutoCompleteTextView WorkNumTextView;
     private AutoCompleteTextView TagsTextView;
     private Button AddTagButton;
     private MultiAutoCompleteTextView BioTextView;
     private Button FinishButton;
+
+    private String[] categories = {"Swipe to select your category", "Allergist/Immunologist", "Anesthesiologist", "Cardiologist", "Dermatologist", "Family Physician",
+            "Gastroenterologist", "Generalist", "Hematologist", "Internist", "Nephrologist",
+            "Neurologist", "Ophthalmologist", "Pathologist", "Pediatrician", "Psychiatrist",
+            "Radiologist", "Rheumatologist", "Sports Medicine Specialist", "Urologist", "Other"};
+
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabase;
@@ -39,6 +46,7 @@ public class DoctorSignup extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_signup);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        swipeSelector = findViewById(R.id.swipeSelector);
 
         Intent doctor_signup = getIntent();
         final String Email = doctor_signup.getStringExtra(SignUpActivity.EXTRA_EMAIL);
@@ -46,11 +54,6 @@ public class DoctorSignup extends AppCompatActivity {
         final String Name = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NAME);
         final String Num = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NUM);
 
-                SwipeSelector swipeSelector = findViewById(R.id.swipeSelector);
-        String[] categories = {"Swipe to select your category", "Allergist/Immunologist", "Anesthesiologist", "Cardiologist", "Dermatologist", "Family Physician",
-                "Gastroenterologist", "Generalist", "Hematologist", "Internist", "Nephrologist",
-                "Neurologist", "Ophthalmologist", "Pathologist", "Pediatrician", "Psychiatrist",
-                "Radiologist", "Rheumatologist", "Sports Medicine Specialist", "Urologist", "Other"};
         swipeSelector.setItems(
                 new SwipeItem(0, categories[0], ""),
                 new SwipeItem(1, categories[1], ""),
@@ -86,7 +89,7 @@ public class DoctorSignup extends AppCompatActivity {
         FinishButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                RegisterDoctor(Email, Password,Name,Num);
+                RegisterDoctor(Email, Password, Name, Num);
 
             }
         });
@@ -103,6 +106,7 @@ public class DoctorSignup extends AppCompatActivity {
         //String Tags = TagsTextView.getText().toString().trim();
         String Bio = BioTextView.getText().toString().trim();
 
+
         if (TextUtils.isEmpty(Address)) {
             Toast.makeText(this, "Please enter your adress", Toast.LENGTH_SHORT).show();
             return;
@@ -115,6 +119,11 @@ public class DoctorSignup extends AppCompatActivity {
             Toast.makeText(this, "Please enter your bio", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (swipeSelector.getSelectedItem().value.toString() == "0") {
+            Toast.makeText(this, "Please select your category", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         firebaseAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -125,14 +134,16 @@ public class DoctorSignup extends AppCompatActivity {
 
                             Toast.makeText(DoctorSignup.this, "Sign up completed", Toast.LENGTH_SHORT).show();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(categories[(int) swipeSelector.getSelectedItem().value]);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullName);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(Number);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("address").setValue(AddressTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("work number").setValue(WorkNumTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("bio").setValue(BioTextView.getText().toString().trim());
 
+
                             //Intent login = new Intent(DoctorSignup.this, //TODO here we put the doctors main activity);
-                           // startActivity(login);
+                            // startActivity(login);
                         } else {
 
                             //Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();

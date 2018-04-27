@@ -58,28 +58,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         SignUpButton = (Button) findViewById(R.id.SignUpButton);
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (mSwitchMultiButton.getSelectedTab() == 0) {
-                    RegisterPatient();
-                } else {
-                    String Email = EmailTextView.getText().toString().trim();
-                    String Password = PasswordTextView.getText().toString().trim();
-
-                    Intent doctor_signup = new Intent(SignUpActivity.this, DoctorSignup.class);
-
-                    doctor_signup.putExtra("SIGNUP_EXTRA_EMAIL",Email);
-                    doctor_signup.putExtra("SIGNUP_EXTRA_PASS",Password);
-                    doctor_signup.putExtra("SIGNUP_EXTRA_NAME",FullNameTextView.getText().toString().trim());
-                    doctor_signup.putExtra("SIGNUP_EXTRA_NUM",PhoneNumberTextView.getText().toString().trim());
-
-                    startActivity(doctor_signup);
-
-                }
-
+                Register();
             }
         });
     }
 
-    private void RegisterPatient() {
+    private void Register() {
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
@@ -94,9 +78,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (TextUtils.isEmpty(Email)) {
             Toast.makeText(this, "Please enter E-mail", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
-            Toast.makeText(this,"E-mail format is incorrect",Toast.LENGTH_SHORT).show();
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
+            Toast.makeText(this, "E-mail format is incorrect", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(Password)) {
@@ -107,26 +90,35 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (mSwitchMultiButton.getSelectedTab() == 0) {
+            firebaseAuth.createUserWithEmailAndPassword(Email, Password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
+                                Toast.makeText(SignUpActivity.this, "Sign up completed", Toast.LENGTH_SHORT).show();
+                                mDatabase = FirebaseDatabase.getInstance().getReference();
+                                mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullNameTextView.getText().toString().trim());
+                                mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(PhoneNumberTextView.getText().toString().trim());
+                                Intent login = new Intent(SignUpActivity.this, LoginActivity.class);
+                                startActivity(login);
+                            } else {
 
-        firebaseAuth.createUserWithEmailAndPassword(Email, Password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-
-                            Toast.makeText(SignUpActivity.this, "Sign up completed", Toast.LENGTH_SHORT).show();
-                            mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullNameTextView.getText().toString().trim());
-                            mDatabase.child("patients").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(PhoneNumberTextView.getText().toString().trim());
-                            Intent login = new Intent(SignUpActivity.this, LoginActivity.class);
-                            startActivity(login);
-                        } else {
-
-                            Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        } else {
+            Intent doctor_signup = new Intent(SignUpActivity.this, DoctorSignup.class);
+
+            doctor_signup.putExtra("SIGNUP_EXTRA_EMAIL", Email);
+            doctor_signup.putExtra("SIGNUP_EXTRA_PASS", Password);
+            doctor_signup.putExtra("SIGNUP_EXTRA_NAME", FullNameTextView.getText().toString().trim());
+            doctor_signup.putExtra("SIGNUP_EXTRA_NUM", PhoneNumberTextView.getText().toString().trim());
+
+            startActivity(doctor_signup);
+        }
     }
 
     @Override
