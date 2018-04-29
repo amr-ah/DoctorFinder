@@ -1,6 +1,7 @@
 package capstone.com.doctorfinder;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -98,13 +99,20 @@ public class DoctorSignup extends AppCompatActivity {
 
     private void RegisterDoctor(String Email, String Password, final String FullName, final String Number) {
 
-        //TODO add validation for category
         //String category = .getText().toString().trim();
         String Address = AddressTextView.getText().toString().trim();
         String WorkNum = WorkNumTextView.getText().toString().trim();
         //TODO count tags for validation (minimum is 3)
-        //String Tags = TagsTextView.getText().toString().trim();
         String Bio = BioTextView.getText().toString().trim();
+
+
+        // this code is not for here its just for testing
+        /*String MapAddress = "geo:0,0?q="+Address.trim();
+        Uri IntentUri = Uri.parse(MapAddress);
+        Intent  mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.setData(IntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);*/
 
 
         if (TextUtils.isEmpty(Address)) {
@@ -132,19 +140,19 @@ public class DoctorSignup extends AppCompatActivity {
 
                             Toast.makeText(DoctorSignup.this, "Sign up completed", Toast.LENGTH_SHORT).show();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(categories[(int) swipeSelector.getSelectedItem().value]);
+
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullName);
-                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(Number);
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(categories[(int) swipeSelector.getSelectedItem().value]);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("address").setValue(AddressTextView.getText().toString().trim());
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(Number);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("work number").setValue(WorkNumTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("bio").setValue(BioTextView.getText().toString().trim());
-
 
                             //Intent login = new Intent(DoctorSignup.this, //TODO here we put the doctors main activity);
                             // startActivity(login);
                         } else {
 
-                            //Toast.makeText(SignUpActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DoctorSignup.this, "Sign up failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
