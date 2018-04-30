@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AutoCompleteTextView EmailTextView;
     private AutoCompleteTextView PasswordTextView;
@@ -33,91 +33,82 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        EmailTextView =(AutoCompleteTextView) findViewById(R.id.EmailTextView);
-        PasswordTextView =(AutoCompleteTextView) findViewById(R.id.PasswordTextView);
+        EmailTextView = (AutoCompleteTextView) findViewById(R.id.EmailTextView);
+        PasswordTextView = (AutoCompleteTextView) findViewById(R.id.PasswordTextView);
 
         firebaseAuth = firebaseAuth.getInstance();
 
         LoginButton = (Button) findViewById(R.id.LoginButton);
         LoginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Patientlogin();
+                login();
             }
         });
     }
 
     public void toSignUp(View view) {
-        Intent i = new Intent(this,SignUpActivity.class);
+        Intent i = new Intent(this, SignUpActivity.class);
         startActivity(i);
     }
 
-    public void Patientlogin()
-    {
+    public void login() {
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
-        if(TextUtils.isEmpty(Email))
-        {
-            Toast.makeText(this,"please enter E-mail",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Email)) {
+            Toast.makeText(this, "please enter E-mail", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
-            Toast.makeText(this,"E-mail format is incorrect",Toast.LENGTH_SHORT).show();
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
+            Toast.makeText(this, "E-mail format is incorrect", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(TextUtils.isEmpty(Password))
-        {
-            Toast.makeText(this,"please enter your Password",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Password)) {
+            Toast.makeText(this, "please enter your Password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Toast.makeText(LoginActivity.this, "Signing in", Toast.LENGTH_SHORT).show();
 
-        firebaseAuth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
-        {
+        firebaseAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task)
-            {
-                if(task.isSuccessful())
-                {
-
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
                     //TODO check if the type of the email and password is a doctor or patient to redirect to the proper page
                     mDatabase = FirebaseDatabase.getInstance().getReference();
                     mDatabase.child("patients").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot)
-                        {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                            {
-
-                               String U_ID = firebaseAuth.getCurrentUser().getUid();
-                               //makeText(LoginActivity.this,"snapshotkey ="+snapshot.getKey(), Toast.LENGTH_SHORT).show();
-                               //Toast.makeText(LoginActivity.this,"U_ID"+U_ID, Toast.LENGTH_SHORT).show();
-                                EmailTextView.setText("U_ID"+U_ID);
-                                //PasswordTextView.setText();
-                                if(snapshot.getKey()== U_ID)
-                                {
-                                    Intent login = new Intent(LoginActivity.this,user_main.class);
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
+                                    Intent login = new Intent(LoginActivity.this, user_main.class);
                                     startActivity(login);
                                 }
                             }
-
                         }
-
                         @Override
-                        public void onCancelled(DatabaseError databaseError)
-                        {
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
+                    });
+                mDatabase.child("doctors").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                        {
+                            if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
+                                    //TODO sign in to the doctors main page
+                                    //Intent doctorLogin = new Intent(LoginActivity.this,);
+                                    //startActivity(doctorLogin);
+                                }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError){
+                    }
 
-                });
-
-
-                           // Toast.makeText(LoginActivity.this, "done", Toast.LENGTH_SHORT).show();
-                    //Intent login = new Intent(LoginActivity.this,user_main.class);
-                    //startActivity(login);
-
+                    });
                 } else {
                     Toast.makeText(LoginActivity.this, "Email and password don't match", Toast.LENGTH_SHORT).show();
                 }
@@ -130,12 +121,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
 
-        if(v==LoginButton) {
+        if (v == LoginButton) {
 
-            Patientlogin();
+            login();
         }
     }
+
 }
