@@ -48,9 +48,10 @@
                 android:layout_height="wrap_content"
                 app:swipe_leftButtonResource="@drawable/ic_keyboard_arrow_left_black_24dp"
                 app:swipe_rightButtonResource="@drawable/ic_keyboard_arrow_right_black_24dp"
-                app:swipe_indicatorActiveColor="@color/darkblue"
-                app:swipe_indicatorInActiveColor="@color/myWhite"
+                app:swipe_indicatorActiveColor="@color/myWhite"
+                app:swipe_indicatorInActiveColor="@color/darkblue"
                 android:id="@+id/swipeSelector"/>
+
 
             <MultiAutoCompleteTextView
                 android:id="@+id/AddressTextView"
@@ -62,11 +63,12 @@
                 android:background="@drawable/rounded_white"
                 android:drawableLeft="@drawable/ic_place_black_24dp"
                 android:drawablePadding="5dp"
+                android:fontFamily="@font/roboto_light"
                 android:hint="Address"
                 android:paddingLeft="@null"
                 android:paddingStart="10dp"
                 android:textCursorDrawable="@null"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
 
             <AutoCompleteTextView
                 android:id="@+id/WorkNumTextView"
@@ -163,6 +165,24 @@
                 android:textCursorDrawable="@null"
                 android:textSize="15sp" />
 
+
+                <AutoCompleteTextView
+                    android:visibility="gone"
+                    android:id="@+id/newCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@drawable/ic_bookmark_black_24dp"
+                    android:drawablePadding="5dp"
+                    android:hint="Your Category"
+                    android:paddingLeft="@null"
+                    android:paddingStart="10dp"
+                    android:textCursorDrawable="@null"
+                    android:textSize="15sp" />
+
             <Button
                 android:id="@+id/FinishButton"
                 android:layout_width="wrap_content"
@@ -175,7 +195,8 @@
                 android:text="Finish"
                 android:textColor="#fff"
                 android:textSize="17sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:onClick="checkDoctor"/>
 
         </LinearLayout>
 

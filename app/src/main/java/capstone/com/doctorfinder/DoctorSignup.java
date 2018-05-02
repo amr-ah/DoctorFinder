@@ -1,5 +1,6 @@
 package capstone.com.doctorfinder;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
@@ -31,6 +33,10 @@ public class DoctorSignup extends AppCompatActivity {
     private Button AddTagButton;
     private MultiAutoCompleteTextView BioTextView;
     private Button FinishButton;
+    private AutoCompleteTextView mAutoCompleteTextView;
+    private int val;
+    private String Email, Password, Name, Num, category, option;
+    private SwipeItem selected;
 
     private String[] categories = {"Swipe to select your category", "Allergist/Immunologist", "Anesthesiologist", "Cardiologist", "Dermatologist", "Family Physician",
             "Gastroenterologist", "Generalist", "Hematologist", "Internist", "Nephrologist",
@@ -50,10 +56,10 @@ public class DoctorSignup extends AppCompatActivity {
         swipeSelector = findViewById(R.id.swipeSelector);
 
         Intent doctor_signup = getIntent();
-        final String Email = doctor_signup.getStringExtra(SignUpActivity.EXTRA_EMAIL);
-        final String Password = doctor_signup.getStringExtra(SignUpActivity.EXTRA_PASS);
-        final String Name = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NAME);
-        final String Num = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NUM);
+        Email = doctor_signup.getStringExtra(SignUpActivity.EXTRA_EMAIL);
+        Password = doctor_signup.getStringExtra(SignUpActivity.EXTRA_PASS);
+        Name = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NAME);
+        Num = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NUM);
 
         swipeSelector.setItems(
                 new SwipeItem(0, categories[0], ""),
@@ -86,25 +92,30 @@ public class DoctorSignup extends AppCompatActivity {
         AddTagButton = (Button) findViewById(R.id.AddTagButton);
         BioTextView = (MultiAutoCompleteTextView) findViewById(R.id.BioTextView);
         FinishButton = (Button) findViewById(R.id.FinishButton);
+        mAutoCompleteTextView = findViewById(R.id.newCategory);
 
-        FinishButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-                RegisterDoctor(Email, Password, Name, Num);
 
-            }
-        });
+
+
+
+
+
+
+
 
     }
 
-    private void RegisterDoctor(String Email, String Password, final String FullName, final String Number) {
+    private void RegisterDoctor(String Email, String Password, final String FullName, final String Number, final String Category) {
 
         //String category = .getText().toString().trim();
         String Address = AddressTextView.getText().toString().trim();
         String WorkNum = WorkNumTextView.getText().toString().trim();
         //TODO count tags for validation (minimum is 3)
         String Bio = BioTextView.getText().toString().trim();
-
+        category = mAutoCompleteTextView.getText().toString().trim();
+        selected = swipeSelector.getSelectedItem();
+        val = (int) selected.value;
 
         // this code is not for here its just for testing
         /*String MapAddress = "geo:0,0?q="+Address.trim();
@@ -127,10 +138,28 @@ public class DoctorSignup extends AppCompatActivity {
             Toast.makeText(this, "Please enter your bio", Toast.LENGTH_SHORT).show();
             return;
         }
-        if ((int)swipeSelector.getSelectedItem().value == 0) {
+        if (val == 0) {
             Toast.makeText(this, "Please select your category", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(val==20){                                                                        //this one checks if the user chose 'Other'
+            mAutoCompleteTextView.setVisibility(View.VISIBLE);                              //makes the category textview visible
+
+            if (TextUtils.isEmpty(category)){
+                Toast.makeText(DoctorSignup.this,"Enter your Category",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                option = category;
+            }
+
+        }
+        if(val!=20){                                                                    //checks again if the user changes his swipe selection
+            mAutoCompleteTextView.setVisibility(View.GONE);
+            option = selected.title;
+
+        }
+
 
         firebaseAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -142,7 +171,7 @@ public class DoctorSignup extends AppCompatActivity {
                             mDatabase = FirebaseDatabase.getInstance().getReference();
 
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullName);
-                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(categories[(int) swipeSelector.getSelectedItem().value]);
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(Category); //Updated this part to take the category as args
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("address").setValue(AddressTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(Number);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("work number").setValue(WorkNumTextView.getText().toString().trim());
@@ -156,6 +185,15 @@ public class DoctorSignup extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+
+    public void checkDoctor(View view) {
+
+
+        RegisterDoctor(Email, Password, Name, Num, option);
+
+
     }
 
 
