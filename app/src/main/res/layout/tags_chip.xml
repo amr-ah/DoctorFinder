@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.robertlevonyan.views.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="7dp"
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/tag"
+        app:mcv_chipText="some Text"
+        app:mcv_backgroundColor="#79CDCD"
+        app:mcv_textColor="#152a39"
+        app:mcv_closeColor="@color/myWhite"
+        app:mcv_closable="true"
+        ></com.robertlevonyan.views.chip.Chip>
+
+</LinearLayout>

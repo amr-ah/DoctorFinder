@@ -113,7 +113,6 @@
                         android:textSize="15sp" />
 
                     <Button
-                        android:id="@+id/AddTagButton"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="right"
@@ -123,28 +122,20 @@
                         android:text="Add"
                         android:textColor="#fff"
                         android:textSize="17sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:onClick="addTag"/>
                 </LinearLayout>
-                <GridLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:columnCount="2"
-                    android:rowCount="3"
-                    >
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_width="wrap_content"
+                    android:id="@+id/parent_container">
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:mcv_closeColor="@color/myWhite"
-                        app:mcv_backgroundColor="@color/darkblue"
-                        app:mcv_textColor="@color/myWhite"
-                        app:mcv_closable="true"
-                        app:mcv_chipText="first tag" />
-
-                </GridLayout>
+                        android:id="@+id/recycler_view"></android.support.v7.widget.RecyclerView>
+                </LinearLayout>
 
             </LinearLayout>
 

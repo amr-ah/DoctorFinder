@@ -7,6 +7,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -15,14 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.robertlevonyan.views.chip.Chip;
+import com.robertlevonyan.views.chip.OnCloseClickListener;
 import com.roughike.swipeselector.SwipeItem;
 import com.roughike.swipeselector.SwipeSelector;
+
+import java.util.ArrayList;
 
 public class DoctorSignup extends AppCompatActivity {
 
@@ -30,13 +37,12 @@ public class DoctorSignup extends AppCompatActivity {
     private MultiAutoCompleteTextView AddressTextView;
     private AutoCompleteTextView WorkNumTextView;
     private AutoCompleteTextView TagsTextView;
-    private Button AddTagButton;
     private MultiAutoCompleteTextView BioTextView;
-    private Button FinishButton;
     private AutoCompleteTextView mAutoCompleteTextView;
     private int val;
     private String Email, Password, Name, Num, category, option;
     private SwipeItem selected;
+    private ArrayList<String> tags = new ArrayList<>();
 
     private String[] categories = {"Swipe to select your category", "Allergist/Immunologist", "Anesthesiologist", "Cardiologist", "Dermatologist", "Family Physician",
             "Gastroenterologist", "Generalist", "Hematologist", "Internist", "Nephrologist",
@@ -86,12 +92,10 @@ public class DoctorSignup extends AppCompatActivity {
         );
 
 
-        AddressTextView = (MultiAutoCompleteTextView) findViewById(R.id.AddressTextView);
-        WorkNumTextView = (AutoCompleteTextView) findViewById(R.id.WorkNumTextView);
-        TagsTextView = (AutoCompleteTextView) findViewById(R.id.TagsTextView);
-        AddTagButton = (Button) findViewById(R.id.AddTagButton);
-        BioTextView = (MultiAutoCompleteTextView) findViewById(R.id.BioTextView);
-        FinishButton = (Button) findViewById(R.id.FinishButton);
+        AddressTextView = findViewById(R.id.AddressTextView);
+        WorkNumTextView = findViewById(R.id.WorkNumTextView);
+        TagsTextView = findViewById(R.id.TagsTextView);
+        BioTextView = findViewById(R.id.BioTextView);
         mAutoCompleteTextView = findViewById(R.id.newCategory);
 
 
@@ -100,9 +104,7 @@ public class DoctorSignup extends AppCompatActivity {
 
 
 
-
-
-
+    initRecycler();
 
     }
 
@@ -187,6 +189,15 @@ public class DoctorSignup extends AppCompatActivity {
                 });
     }
 
+    void initRecycler(){
+
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,tags);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
 
     public void checkDoctor(View view) {
 
@@ -196,5 +207,18 @@ public class DoctorSignup extends AppCompatActivity {
 
     }
 
+
+    public void addTag(View view) {
+        String newTag = TagsTextView.getText().toString().trim();
+        if (TextUtils.isEmpty(newTag))
+        {
+            Toast.makeText(DoctorSignup.this,"Please enter a tag so patients can find you !",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        tags.add(newTag);
+        initRecycler();
+        TagsTextView.setText("");
+
+    }
 
 }
