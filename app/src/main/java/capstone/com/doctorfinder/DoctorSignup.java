@@ -40,18 +40,17 @@ public class DoctorSignup extends AppCompatActivity {
     private MultiAutoCompleteTextView BioTextView;
     private AutoCompleteTextView mAutoCompleteTextView;
     private int val;
+    private int tagscount;
     private String Email, Password, Name, Num, category, option;
     private SwipeItem selected;
     private ArrayList<String> tags = new ArrayList<>();
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference mDatabase;
 
     private String[] categories = {"Swipe to select your category", "Allergist/Immunologist", "Anesthesiologist", "Cardiologist", "Dermatologist", "Family Physician",
             "Gastroenterologist", "Generalist", "Hematologist", "Internist", "Nephrologist",
             "Neurologist", "Ophthalmologist", "Pathologist", "Pediatrician", "Psychiatrist",
             "Radiologist", "Rheumatologist", "Sports Medicine Specialist", "Urologist", "Other"};
-
-
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,6 @@ public class DoctorSignup extends AppCompatActivity {
         Password = doctor_signup.getStringExtra(SignUpActivity.EXTRA_PASS);
         Name = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NAME);
         Num = doctor_signup.getStringExtra(SignUpActivity.EXTRA_NUM);
-
         swipeSelector.setItems(
                 new SwipeItem(0, categories[0], ""),
                 new SwipeItem(1, categories[1], ""),
@@ -91,26 +89,19 @@ public class DoctorSignup extends AppCompatActivity {
                 new SwipeItem(20, categories[20], "")
         );
 
-
+        tagscount=0;
         AddressTextView = findViewById(R.id.AddressTextView);
         WorkNumTextView = findViewById(R.id.WorkNumTextView);
         TagsTextView = findViewById(R.id.TagsTextView);
         BioTextView = findViewById(R.id.BioTextView);
         mAutoCompleteTextView = findViewById(R.id.newCategory);
-
-
-
-
-
-
-
-    initRecycler();
+        initRecycler();
 
     }
 
-    private void RegisterDoctor(String Email, String Password, final String FullName, final String Number, final String Category) {
+    private void RegisterDoctor(String Email, String Password, final String FullName, final String Number, final String Category)
+    {
 
-        //String category = .getText().toString().trim();
         String Address = AddressTextView.getText().toString().trim();
         String WorkNum = WorkNumTextView.getText().toString().trim();
         //TODO count tags for validation (minimum is 3)
@@ -119,17 +110,12 @@ public class DoctorSignup extends AppCompatActivity {
         selected = swipeSelector.getSelectedItem();
         val = (int) selected.value;
 
-        // this code is not for here its just for testing
-        /*String MapAddress = "geo:0,0?q="+Address.trim();
-        Uri IntentUri = Uri.parse(MapAddress);
-        Intent  mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(IntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);*/
-
-
         if (TextUtils.isEmpty(Address)) {
             Toast.makeText(this, "Please enter your adress", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (tagscount<3) {
+            Toast.makeText(this, "Please enter at least 3 tags", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(WorkNum)) {
@@ -156,12 +142,15 @@ public class DoctorSignup extends AppCompatActivity {
             }
 
         }
-        if(val!=20){                                                                    //checks again if the user changes his swipe selection
+        if(val!=20){                                        //checks again if the user changes his swipe selection
             mAutoCompleteTextView.setVisibility(View.GONE);
             option = selected.title;
 
         }
+        if(val==20) {
+            category = mAutoCompleteTextView.getText().toString().trim();
 
+        }
 
         firebaseAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -171,13 +160,23 @@ public class DoctorSignup extends AppCompatActivity {
 
                             Toast.makeText(DoctorSignup.this, "Sign up completed", Toast.LENGTH_SHORT).show();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
+                            int c = 0;
+                            String allTags="";
+                            while (tags.size() > c)
+                            {
+                                allTags+=tags.get(c)+",";
+                                //TODO find out a way to add tags without overwriting
+                                //mDatabase.child("tags").child(tags.get(c)).child(c+"").setValue(firebaseAuth.getCurrentUser().getUid());
+                                c++;
 
+                            }
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullName);
-                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(Category); //Updated this part to take the category as args
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(category);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("address").setValue(AddressTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("phone number").setValue(Number);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("work number").setValue(WorkNumTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("bio").setValue(BioTextView.getText().toString().trim());
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("tags").setValue(tags);
 
                             //Intent login = new Intent(DoctorSignup.this, //TODO here we put the doctors main activity);
                             // startActivity(login);
@@ -189,9 +188,8 @@ public class DoctorSignup extends AppCompatActivity {
                 });
     }
 
-    void initRecycler(){
-
-
+    void initRecycler()
+    {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,tags);
         recyclerView.setAdapter(adapter);
@@ -199,12 +197,9 @@ public class DoctorSignup extends AppCompatActivity {
     }
 
 
-    public void checkDoctor(View view) {
-
-
+    public void checkDoctor(View view)
+    {
         RegisterDoctor(Email, Password, Name, Num, option);
-
-
     }
 
 
@@ -216,6 +211,7 @@ public class DoctorSignup extends AppCompatActivity {
             return;
         }
         tags.add(newTag);
+        tagscount ++;
         initRecycler();
         TagsTextView.setText("");
 
