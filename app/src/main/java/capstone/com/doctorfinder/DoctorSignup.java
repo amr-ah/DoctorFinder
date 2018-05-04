@@ -89,7 +89,7 @@ public class DoctorSignup extends AppCompatActivity {
                 new SwipeItem(20, categories[20], "")
         );
 
-        tagscount=0;
+        tagscount = 0;
         AddressTextView = findViewById(R.id.AddressTextView);
         WorkNumTextView = findViewById(R.id.WorkNumTextView);
         TagsTextView = findViewById(R.id.TagsTextView);
@@ -99,8 +99,8 @@ public class DoctorSignup extends AppCompatActivity {
 
     }
 
-    private void RegisterDoctor(String Email, String Password, final String FullName, final String Number, final String Category)
-    {
+    private void RegisterDoctor(String Email, String Password, final String FullName, final String Number, final String Category) {
+
 
         String Address = AddressTextView.getText().toString().trim();
         String WorkNum = WorkNumTextView.getText().toString().trim();
@@ -114,7 +114,7 @@ public class DoctorSignup extends AppCompatActivity {
             Toast.makeText(this, "Please enter your adress", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (tagscount<3) {
+        if (tagscount < 3) {
             Toast.makeText(this, "Please enter at least 3 tags", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -130,26 +130,27 @@ public class DoctorSignup extends AppCompatActivity {
             Toast.makeText(this, "Please select your category", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(val==20){                                                                        //this one checks if the user chose 'Other'
+        if (val == 20) {                                                                        //this one checks if the user chose 'Other'
             mAutoCompleteTextView.setVisibility(View.VISIBLE);                              //makes the category textview visible
 
-            if (TextUtils.isEmpty(category)){
-                Toast.makeText(DoctorSignup.this,"Enter your Category",Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(category)) {
+                Toast.makeText(DoctorSignup.this, "Enter your Category", Toast.LENGTH_SHORT).show();
                 return;
-            }
-            else {
+            } else {
                 option = category;
             }
 
         }
-        if(val!=20){                                        //checks again if the user changes his swipe selection
+        if (val != 20) {                                        //checks again if the user changes his swipe selection
             mAutoCompleteTextView.setVisibility(View.GONE);
             option = selected.title;
 
         }
-        if(val==20) {
+        if (val == 20) {
             category = mAutoCompleteTextView.getText().toString().trim();
 
+        } else {
+            category = categories[(int) swipeSelector.getSelectedItem().value];
         }
 
         firebaseAuth.createUserWithEmailAndPassword(Email, Password)
@@ -161,14 +162,13 @@ public class DoctorSignup extends AppCompatActivity {
                             Toast.makeText(DoctorSignup.this, "Sign up completed", Toast.LENGTH_SHORT).show();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
                             int c = 0;
-                            String allTags="";
-                            while (tags.size() > c)
-                            {
-                                allTags+=tags.get(c)+",";
-                                //TODO find out a way to add tags without overwriting
-                                //mDatabase.child("tags").child(tags.get(c)).child(c+"").setValue(firebaseAuth.getCurrentUser().getUid());
-                                c++;
 
+                            while (tags.size() > c) {
+                                //TODO find out a way to add tags without overwriting
+                                String element = firebaseAuth.getCurrentUser().getUid().toString();
+                                mDatabase.child("tags").child(tags.get(c)).child(element).setValue(element);
+
+                                c++;
                             }
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullName);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("category").setValue(category);
@@ -188,30 +188,25 @@ public class DoctorSignup extends AppCompatActivity {
                 });
     }
 
-    void initRecycler()
-    {
+    void initRecycler() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,tags);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, tags);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
-    public void checkDoctor(View view)
-    {
+    public void checkDoctor(View view) {
         RegisterDoctor(Email, Password, Name, Num, option);
     }
 
-
     public void addTag(View view) {
         String newTag = TagsTextView.getText().toString().trim();
-        if (TextUtils.isEmpty(newTag))
-        {
-            Toast.makeText(DoctorSignup.this,"Please enter a tag so patients can find you !",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(newTag)) {
+            Toast.makeText(DoctorSignup.this, "Please enter a tag so patients can find you !", Toast.LENGTH_SHORT).show();
             return;
         }
         tags.add(newTag);
-        tagscount ++;
+        tagscount++;
         initRecycler();
         TagsTextView.setText("");
 
