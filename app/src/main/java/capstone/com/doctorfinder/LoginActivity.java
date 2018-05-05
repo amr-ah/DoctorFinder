@@ -81,8 +81,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
-                                    Intent login = new Intent(LoginActivity.this, user_main.class);
-                                    startActivity(login);
+                                  //  Intent login = new Intent(LoginActivity.this, user_main.class);
+                                   // startActivity(login);
                                 }
                             }
                         }

@@ -23,10 +23,6 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".DoctorSignup"></activity>
-        <activity
-            android:name=".user_main"
-            android:label="@string/title_activity_user_main"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
