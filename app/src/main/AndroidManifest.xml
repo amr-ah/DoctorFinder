@@ -3,26 +3,28 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="capstone.com.doctorfinder">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        tools:replace="android:icon"
         android:allowBackup="true"
         android:icon="@mipmap/doctorfinder"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/doctorfinder"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".DoctorSignup"></activity>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".DoctorSignup"/>
+        <activity android:name=".DoctorMenu">
+        </activity>
     </application>
 
 </manifest>
