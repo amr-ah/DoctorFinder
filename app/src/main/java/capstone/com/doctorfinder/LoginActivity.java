@@ -51,11 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(i);
     }
 
-    public void login() {
-
-        //Intent login = new Intent(LoginActivity.this, search.class);
-        //startActivity(login);
-
+    public void login()
+    {
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
@@ -86,8 +83,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
                                     //TODO redirect the patient to his main page here
-                                    //  Intent login = new Intent(LoginActivity.this, user_main.class);
-                                    // startActivity(login);
+                                    Intent PatientLogin = new Intent(LoginActivity.this,search.class);
+                                    startActivity(PatientLogin);
                                 }
                             }
                         }

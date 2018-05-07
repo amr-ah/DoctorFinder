@@ -56,7 +56,7 @@ public class DoctorMenu extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth.getInstance().signOut();
         Intent signout = new Intent(DoctorMenu.this, LoginActivity.class);
-        Toast.makeText(DoctorMenu.this, "signing out", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DoctorMenu.this, "signed out", Toast.LENGTH_SHORT).show();
         startActivity(signout);
     }
 

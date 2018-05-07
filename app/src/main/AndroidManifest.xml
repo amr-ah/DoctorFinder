@@ -23,8 +23,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".DoctorSignup" />
-        <activity android:name=".DoctorMenu"/>
-        <activity android:name=".search"></activity>
+        <activity android:name=".DoctorMenu" />
+        <activity android:name=".search" />
     </application>
 
 </manifest>
