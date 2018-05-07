@@ -104,7 +104,6 @@ public class DoctorSignup extends AppCompatActivity {
 
         String Address = AddressTextView.getText().toString().trim();
         String WorkNum = WorkNumTextView.getText().toString().trim();
-        //TODO count tags for validation (minimum is 3)
         String Bio = BioTextView.getText().toString().trim();
         category = mAutoCompleteTextView.getText().toString().trim();
         selected = swipeSelector.getSelectedItem();
@@ -164,7 +163,7 @@ public class DoctorSignup extends AppCompatActivity {
                             int c = 0;
 
                             while (tags.size() > c) {
-                                //TODO find out a way to add tags without overwriting
+                                //TODO find out a way to put tags in the database in a batter seperate way
                                 String element = firebaseAuth.getCurrentUser().getUid().toString();
                                 mDatabase.child("tags").child(tags.get(c)).child(element).setValue(element);
 
@@ -178,8 +177,8 @@ public class DoctorSignup extends AppCompatActivity {
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("bio").setValue(BioTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("tags").setValue(tags);
 
-                            //Intent login = new Intent(DoctorSignup.this, //TODO here we put the doctors main activity);
-                            // startActivity(login);
+                            Intent DoctorLogin = new Intent(DoctorSignup.this,DoctorMenu.class );
+                            startActivity(DoctorLogin);
                         } else {
 
                             Toast.makeText(DoctorSignup.this, "Sign up failed", Toast.LENGTH_SHORT).show();

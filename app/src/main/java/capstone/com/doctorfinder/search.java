@@ -31,6 +31,8 @@ public class search extends AppCompatActivity {
     private void fireBaseDoctorSearch() {
 
 
+        //TODO (annas) design the items for the recyclelistview so i can use it here
+        //TODO retrieve the doctors info according to the searched terms (look into the tags and the category of each doctor)
 
     }
 

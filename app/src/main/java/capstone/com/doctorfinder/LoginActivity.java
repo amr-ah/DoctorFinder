@@ -53,10 +53,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void login() {
 
-        Intent login = new Intent(LoginActivity.this, search.class);
-        startActivity(login);
+        //Intent login = new Intent(LoginActivity.this, search.class);
+        //startActivity(login);
 
-        /*String Email = EmailTextView.getText().toString().trim();
+        String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
         if (TextUtils.isEmpty(Email)) {
@@ -78,13 +78,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    //TODO check if the type of the email and password is a doctor or patient to redirect to the proper page
+
                     mDatabase = FirebaseDatabase.getInstance().getReference();
                     mDatabase.child("patients").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
+                                    //TODO redirect the patient to his main page here
                                     //  Intent login = new Intent(LoginActivity.this, user_main.class);
                                     // startActivity(login);
                                 }
@@ -102,9 +103,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             for (DataSnapshot snapshot : dataSnapshot.getChildren())
                             {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
-                                    //TODO sign in to the doctors main page
-                                    //Intent doctorLogin = new Intent(LoginActivity.this,);
-                                    //startActivity(doctorLogin);
+
+                                    Intent doctorLogin = new Intent(LoginActivity.this,DoctorMenu.class);
+                                    startActivity(doctorLogin);
                                 }
                             }
                         }
@@ -117,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(LoginActivity.this, "Email and password don't match", Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
 
     }
 
