@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -54,6 +56,7 @@ public class DoctorMenu extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth.getInstance().signOut();
         Intent signout = new Intent(DoctorMenu.this, LoginActivity.class);
+        Toast.makeText(DoctorMenu.this, "signing out", Toast.LENGTH_SHORT).show();
         startActivity(signout);
     }
 
