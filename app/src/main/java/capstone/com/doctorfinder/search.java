@@ -30,7 +30,7 @@ public class search extends AppCompatActivity {
 
     private void fireBaseDoctorSearch() {
 
-        FirebaseRecycleradapter
+
 
     }
 
