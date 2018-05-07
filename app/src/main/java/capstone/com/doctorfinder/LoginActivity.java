@@ -52,7 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void login() {
-        String Email = EmailTextView.getText().toString().trim();
+
+        Intent login = new Intent(LoginActivity.this, search.class);
+        startActivity(login);
+
+        /*String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
         if (TextUtils.isEmpty(Email)) {
@@ -81,8 +85,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
-                                  //  Intent login = new Intent(LoginActivity.this, user_main.class);
-                                   // startActivity(login);
+                                    //  Intent login = new Intent(LoginActivity.this, user_main.class);
+                                    // startActivity(login);
                                 }
                             }
                         }
@@ -91,29 +95,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         }
                     });
-                mDatabase.child("doctors").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot)
-                    {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    mDatabase.child("doctors").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot)
                         {
-                            if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                            {
+                                if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
                                     //TODO sign in to the doctors main page
                                     //Intent doctorLogin = new Intent(LoginActivity.this,);
                                     //startActivity(doctorLogin);
                                 }
+                            }
                         }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError){
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError){
+                        }
 
                     });
                 } else {
                     Toast.makeText(LoginActivity.this, "Email and password don't match", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
     }
 
