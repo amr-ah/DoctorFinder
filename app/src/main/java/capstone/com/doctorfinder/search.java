@@ -26,12 +26,17 @@ import java.util.ArrayList;
 public class search extends AppCompatActivity
 {
 
-   private AutoCompleteTextView SearchTextView;
+    private ArrayList<String> Names = new ArrayList<>();
+    private ArrayList<String> Images = new ArrayList<>();
+    private ArrayList<String> Addresses = new ArrayList<>();
+    private ArrayList<String> DUIDs = new ArrayList<>();
+    private ArrayList<Double> ratings = new ArrayList<>();
+
+    private AutoCompleteTextView SearchTextView;
     private Button SearchButton;
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
     //private FirebaseUser firebaseuser;
-    private ArrayList<String> doctorsName;
 
 
 
@@ -45,10 +50,6 @@ public class search extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.result_list);
         databaseReference = FirebaseDatabase.getInstance().getReference("doctors");
         //firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
-
-        doctorsName = new ArrayList<>();
-
-
 
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -67,15 +68,26 @@ public class search extends AppCompatActivity
         //TODO (annas) design the items for the recyclelistview so i can use it here
         //TODO retrieve the doctors info according to the searched terms (look into the tags and the category of each doctor)
 
-
-       /*databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+       databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                doctorsName.clear();
+                Names.clear();
+                Images.clear();
+                DUIDs.clear();
+                Addresses.clear();
+                ratings.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    doctorsName.add(snapshot.child("full name").getValue(String.class));
+                    Names.add(snapshot.child("full name").getValue(String.class));
+                    //TODO get image link after its added to the database
+                    //Images.add(snapshot.child("").getValue(String.class));
+                    //DUIDs.add("image");
+                    Addresses.add(snapshot.child("address").getValue(String.class));
+                    //TODO look for how you can cast to a double
+                    //ratings.add(snapshot.child("rating").getValue(String.class));
+                    initRecycler();
+
                 }
             }
 
@@ -83,14 +95,14 @@ public class search extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
     }
-    public class DoctorsViewHolder extends RecyclerView.ViewHolder
-    {
-        View mView;
-        public DoctorsViewHolder(View itemView) {
-            super(itemView);
-            mView=itemView;
-        }
+
+    void initRecycler() {
+        RecyclerView recyclerView = findViewById(R.id.result_list);
+        //TODO send arrays here
+        SearchRVAdapter adapter = new SearchRVAdapter(this,Names,Images,Addresses,ratings);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

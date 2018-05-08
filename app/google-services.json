@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "427470019034-r2uotpbtl4ddhirh58p5i6uab1h58k3r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "capstone.com.doctorfinder",
+            "certificate_hash": "de3663ff5c85c5990401e2285345e6b828f5a9bc"
+          }
+        },
+        {
           "client_id": "427470019034-9ivc3qbjrjrps0jpeelcakf9vibcq11j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

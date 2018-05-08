@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     private AutoCompleteTextView EmailTextView;
     private AutoCompleteTextView PasswordTextView;
@@ -53,7 +53,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void login()
     {
-        String Email = EmailTextView.getText().toString().trim();
+
+        Intent doctorLogin = new Intent(LoginActivity.this,search.class);
+        startActivity(doctorLogin);
+        /*String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
         if (TextUtils.isEmpty(Email)) {
@@ -128,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v == LoginButton) {
 
             login();
-        }
+        }*/
     }
 
 }
