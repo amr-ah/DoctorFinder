@@ -176,6 +176,8 @@ public class DoctorSignup extends AppCompatActivity {
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("work number").setValue(WorkNumTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("bio").setValue(BioTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("tags").setValue(tags);
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("rating").setValue(0.0);
+
 
                             Intent DoctorLogin = new Intent(DoctorSignup.this,DoctorMenu.class );
                             startActivity(DoctorLogin);
