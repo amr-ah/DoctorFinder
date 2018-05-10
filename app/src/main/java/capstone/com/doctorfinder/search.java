@@ -1,11 +1,15 @@
 package capstone.com.doctorfinder;
 
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +36,17 @@ public class search extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        //This part is to change the color of the status bar to match the background ( works only for lollipop or above !!! )
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this,R.color.myBlue));
+        }
+
+
+
         SearchTextView = (AutoCompleteTextView)findViewById(R.id.SearchTextView);
         SearchButton = (Button) findViewById(R.id.SearchButton);
         recyclerView = (RecyclerView) findViewById(R.id.result_list);
