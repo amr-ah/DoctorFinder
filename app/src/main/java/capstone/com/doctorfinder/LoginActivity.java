@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login()
     {
 
-        Intent doctorLogin = new Intent(LoginActivity.this,search.class);
+        Intent doctorLogin = new Intent(LoginActivity.this,DoctorProfile.class);
         startActivity(doctorLogin);
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
-                                    Intent PatientLogin = new Intent(LoginActivity.this,search.class);
+                                    Intent PatientLogin = new Intent(LoginActivity.this,PatientMenu.class);
                                     startActivity(PatientLogin);
                                 }
                             }

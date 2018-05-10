@@ -13,8 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
             android:orientation="vertical">
 
             <AutoCompleteTextView
@@ -25,9 +25,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_white"
-                android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
                 android:drawablePadding="5dp"
-                android:hint="search"
+                android:hint="Search"
                 android:paddingLeft="@null"
                 android:paddingStart="10dp"
                 android:textSize="15sp" />

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backgradiant"
+    android:id="@+id/settingBackground"
+    android:gravity="center_horizontal"
+    tools:context="capstone.com.doctorfinder.SettingsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/gray"
+        android:text="Settings"/>
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_white"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="5dp"
+            android:hint="Old password"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:paddingLeft="@null"
+            android:paddingStart="10dp"
+            android:textCursorDrawable="@null"
+            android:textSize="15sp" />
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_white"
+            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+            android:drawablePadding="5dp"
+            android:hint="New password"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:paddingLeft="@null"
+            android:paddingStart="10dp"
+            android:textCursorDrawable="@null"
+            android:textSize="15sp" />
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_white"
+            android:drawableLeft="@drawable/ic_again"
+            android:drawablePadding="5dp"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:paddingLeft="@null"
+            android:paddingStart="10dp"
+            android:textCursorDrawable="@null"
+            android:textSize="15sp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_margin="35dp"
+            android:paddingHorizontal="35dp"
+            android:background="@drawable/rounded_white"
+            android:layout_gravity="center"
+            android:text="Save"/>
+    </LinearLayout>
+
+
+</LinearLayout>

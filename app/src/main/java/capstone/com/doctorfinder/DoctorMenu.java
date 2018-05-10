@@ -42,7 +42,8 @@ public class DoctorMenu extends AppCompatActivity {
 
         SettingsCardView = (CardView) findViewById(R.id.SettingsCardView);
         SettingsCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
-            //TODO settings activity
+            Intent settings = new Intent(DoctorMenu.this,SettingsActivity.class);
+            startActivity(settings);
         }});
 
         SignOutCardView = (CardView) findViewById(R.id.SignOutCardView);
