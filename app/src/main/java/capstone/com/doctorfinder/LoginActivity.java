@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent doctorLogin = new Intent(LoginActivity.this,search.class);
         startActivity(doctorLogin);
-        String Email = EmailTextView.getText().toString().trim();
+        /*String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
         if (TextUtils.isEmpty(Email)) {
@@ -84,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
+                                    //TODO redirect the patient to his main page here
                                     Intent PatientLogin = new Intent(LoginActivity.this,search.class);
                                     startActivity(PatientLogin);
                                 }
@@ -101,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren())
                             {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
+
                                     Intent doctorLogin = new Intent(LoginActivity.this,DoctorMenu.class);
                                     startActivity(doctorLogin);
                                 }
@@ -122,12 +125,13 @@ public class LoginActivity extends AppCompatActivity {
     public void toMain(View view) {
     }
 
+    @Override
     public void onClick(View v) {
 
         if (v == LoginButton) {
 
             login();
-        }
+        }*/
     }
 
 }

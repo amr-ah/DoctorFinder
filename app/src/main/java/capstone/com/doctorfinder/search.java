@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
+
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +29,7 @@ public class search extends AppCompatActivity
     private AutoCompleteTextView SearchTextView;
     private Button SearchButton;
     private RecyclerView recyclerView;
+    private DatabaseReference doctorReference;
     private DatabaseReference databaseReference;
 
     @Override
@@ -35,7 +39,9 @@ public class search extends AppCompatActivity
         SearchTextView = (AutoCompleteTextView)findViewById(R.id.SearchTextView);
         SearchButton = (Button) findViewById(R.id.SearchButton);
         recyclerView = (RecyclerView) findViewById(R.id.result_list);
-        databaseReference = FirebaseDatabase.getInstance().getReference("doctors");
+        doctorReference = FirebaseDatabase.getInstance().getReference("doctors");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         SearchButton.setOnClickListener(new View.OnClickListener() {
@@ -46,31 +52,31 @@ public class search extends AppCompatActivity
         });
     }
 
-    private void DoctorSearch(String S)
-    {
+    private void DoctorSearch(final String S) {
 
         //TODO (annas) design the items for the recyclelistview so i can use it here
         //TODO retrieve the doctors info according to the searched terms (look into the tags and the category of each doctor)
 
-       databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("tags").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot tags) {
 
-                Names.clear();
-                Images.clear();
-                DUIDs.clear();
-                Addresses.clear();
-                ratings.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    Names.add(snapshot.child("full name").getValue(String.class));
-                    Images.add(snapshot.child("image").getValue(String.class));
-                    //DUIDs.add("");
-                    Addresses.add(snapshot.child("address").getValue(String.class));
-                    //TODO look for how you can cast to a double
-                    ratings.add(snapshot.child("rating").getValue(Double.class));
-                    initRecycler();
+
+                for (DataSnapshot tag : tags.getChildren()){
+
+                   if(tag.getKey().trim().equals(S.trim()))
+                   {
+
+                       for (DataSnapshot snapshot : tag.getChildren())
+                       {
+                           //TODO send this to add doctor so it adds doctors with this ID to the list
+                           Toast.makeText(search.this,"ID =" +snapshot.getValue(), Toast.LENGTH_SHORT).show();
+                           //addDoctor();
+                       }
+
+                   }
                 }
+
             }
 
             @Override
@@ -79,6 +85,36 @@ public class search extends AppCompatActivity
             }
         });
     }
+    void addDoctor(String ID)
+    {
+        Toast.makeText(search.this, ID+"matched", Toast.LENGTH_SHORT).show();
+       /* doctorReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Names.clear();
+                            Images.clear();
+                            DUIDs.clear();
+                            Addresses.clear();
+                            ratings.clear();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                            {
+
+                                Names.add(snapshot.child("full name").getValue(String.class));
+                                Images.add(snapshot.child("image").getValue(String.class));
+                                DUIDs.add(snapshot.getKey());
+                                Addresses.add(snapshot.child("address").getValue(String.class));
+                                //TODO look for how you can cast to a double
+                                ratings.add(snapshot.child("rating").getValue(Double.class));
+                                initRecycler();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {}
+                    });*/
+    }
+
 
     void initRecycler() {
         RecyclerView recyclerView = findViewById(R.id.result_list);
