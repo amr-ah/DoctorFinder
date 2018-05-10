@@ -5,14 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.robertlevonyan.views.chip.Chip;
-import com.robertlevonyan.views.chip.OnCloseClickListener;
-
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -24,9 +19,7 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.ViewHo
     private ArrayList<String> Names = new ArrayList<>();
     private ArrayList<String> Images = new ArrayList<>();
     private ArrayList<String> Addresses = new ArrayList<>();
-
     private ArrayList<Double> ratings = new ArrayList<>();
-
     private Context mContext;
 
     public SearchRVAdapter(Context mContext,ArrayList<String> names, ArrayList<String> images, ArrayList<String> addresses,ArrayList<Double> ratings) {
@@ -49,9 +42,8 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.ViewHo
 
         holder.name.setText(Names.get(position));
         holder.address.setText(Addresses.get(position));
-        //holder.rating.setText(ratings.get(position).toString());
-        //TODO set the image from FireBase storage using the string link value
-        //holder.image.setText(Names.get(position));
+        holder.rating.setText(ratings.get(position).toString());
+        Glide.with(mContext).load(Images.get(position)).into(holder.image);
         //TODO on click listener
     }
 
@@ -61,9 +53,6 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        //Chip mChip;
-        //LinearLayout mLinearLayout;
 
         TextView name;
         TextView address;
@@ -77,7 +66,6 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.ViewHo
             address = itemView.findViewById(R.id.AdressTextView);
             rating = itemView.findViewById(R.id.RatingTextView);
              image = itemView.findViewById(R.id.CircleImage);
-
         }
     }
 }

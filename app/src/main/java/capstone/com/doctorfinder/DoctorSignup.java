@@ -1,9 +1,6 @@
 package capstone.com.doctorfinder;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,20 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
-
-import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager;
+import java.util.Random;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.robertlevonyan.views.chip.Chip;
-import com.robertlevonyan.views.chip.OnCloseClickListener;
 import com.roughike.swipeselector.SwipeItem;
 import com.roughike.swipeselector.SwipeSelector;
 
@@ -46,6 +38,9 @@ public class DoctorSignup extends AppCompatActivity {
     private ArrayList<String> tags = new ArrayList<>();
     private FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabase;
+    private String[] defaultimages = {"https://firebasestorage.googleapis.com/v0/b/splendid-window-195220.appspot.com/o/1.jpg?alt=media&token=16edde89-f31f-4dca-a887-50ddaa4e2e50"
+            ,"https://firebasestorage.googleapis.com/v0/b/splendid-window-195220.appspot.com/o/2.jpg?alt=media&token=1a337d95-4e73-46cd-9b45-b3a70c451581",
+            "https://firebasestorage.googleapis.com/v0/b/splendid-window-195220.appspot.com/o/3.jpg?alt=media&token=a3057d23-db83-443d-97e6-6cc93a96d78f"};
 
     private String[] categories = {"Swipe to select your category", "Allergist/Immunologist", "Anesthesiologist", "Cardiologist", "Dermatologist", "Family Physician",
             "Gastroenterologist", "Generalist", "Hematologist", "Internist", "Nephrologist",
@@ -177,7 +172,11 @@ public class DoctorSignup extends AppCompatActivity {
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("bio").setValue(BioTextView.getText().toString().trim());
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("tags").setValue(tags);
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("rating").setValue(0.0);
-
+                            //sets default image randomly
+                            Random rand = new Random();
+                            int n=rand.nextInt(3);
+                            mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("image").
+                                    setValue(defaultimages[n]);
 
                             Intent DoctorLogin = new Intent(DoctorSignup.this,DoctorMenu.class );
                             startActivity(DoctorLogin);

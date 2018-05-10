@@ -10,7 +10,6 @@ public class DoctorProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
 
-
         //TODO check the documentation for the expander in here https://android-arsenal.com/details/1/6662
 
     }
