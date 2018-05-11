@@ -391,11 +391,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/contact_info"
+                        android:drawableLeft="@drawable/ic_comment_black_24dp"
                         android:drawablePadding="10dp"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:text="Contact Information"
+                        android:text="Leave a review"
                         android:textSize="18sp"/>
 
                     <android.support.v7.widget.AppCompatImageView
@@ -461,6 +461,7 @@
                                                 android:layout_marginStart="5dp"
                                                 android:layout_marginEnd="5dp">
                                                 <com.hsalf.smilerating.SmileRating
+                                                    android:id="@+id/smileyRating"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"/>
                                             </LinearLayout>
@@ -513,7 +514,7 @@
                                             >
                                             <MultiAutoCompleteTextView
                                                 android:layout_width="match_parent"
-                                                android:layout_height="90dp"
+                                                android:layout_height="70dp"
                                                 android:layout_marginTop="15dp"
                                                 android:background="@drawable/bio_background"
                                                 android:drawablePadding="5dp"
