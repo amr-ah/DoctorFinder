@@ -27,6 +27,10 @@
         <activity android:name=".search"/>
         <activity android:name=".DoctorProfile">
         </activity>
+        <activity android:name=".PatientMenu">
+        </activity>
+        <activity android:name=".SettingsActivity">
+        </activity>
     </application>
 
 </manifest>

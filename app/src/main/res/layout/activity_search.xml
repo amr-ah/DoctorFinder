@@ -4,17 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgradiant"
+    android:background="@color/myBlue"
     android:orientation="vertical"
     tools:context="capstone.com.doctorfinder.SignUpActivity">
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="40dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginTop="25dp"
             android:orientation="vertical">
 
             <AutoCompleteTextView
@@ -25,9 +21,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_white"
-                android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
                 android:drawablePadding="5dp"
-                android:hint="search"
+                android:hint="Search"
                 android:paddingLeft="@null"
                 android:paddingStart="10dp"
                 android:textSize="15sp" />
@@ -35,15 +31,14 @@
             <Button
                 android:id="@+id/SearchButton"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_background"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
+                android:paddingHorizontal="25dp"
                 android:text="search"
-                android:textColor="#fff"
+                android:textColor="@color/myWhite"
                 android:textSize="17sp"
                 android:textStyle="normal" />
 

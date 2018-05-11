@@ -47,14 +47,6 @@
                 android:src="@mipmap/doctorfinder"
                 android:id="@+id/doctorPicture"
                 />
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:civ_border_color="@color/myWhite"
-                android:src="@drawable/ic_autorenew_black_24dp"
-                android:layout_alignRight="@+id/doctorPicture"
-                android:layout_alignBottom="@+id/doctorPicture"
-                app:civ_circle_background_color="@color/colorPrimary"/>
 
         </RelativeLayout>
         <LinearLayout
@@ -98,14 +90,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="17dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <com.github.florent37.expansionpanel.ExpansionHeader
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,42 +112,47 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_bookmark_black_24dp"
+                        android:drawablePadding="10dp"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:textSize="18sp"
-                        android:drawablePadding="10dp"
-                        android:drawableLeft="@drawable/ic_bookmark_black_24dp"
-                        android:text="Bio"/>
+                        android:text="Bio"
+                        android:textSize="18sp"/>
+
                     <android.support.v7.widget.AppCompatImageView
-                        android:adjustViewBounds="true"
                         android:id="@+id/headerIndicator"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
                         android:layout_width="wrap_content"
-                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginLeft="16dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp"/>
                 </com.github.florent37.expansionpanel.ExpansionHeader>
+
                 <com.github.florent37.expansionpanel.ExpansionLayout
                     android:id="@+id/expansionLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_white"
                     android:layout_marginTop="5dp"
-                    android:layout_width="match_parent">
+                    android:background="@drawable/rounded_white">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_white">
+
                         <android.support.v7.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="20dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15sp"
-                                android:padding="7dp"
                                 android:inputType="textMultiLine"
-                                android:text="@string/lorem"/>
+                                android:padding="7dp"
+                                android:text="@string/lorem"
+                                android:textSize="15sp"/>
                         </android.support.v7.widget.CardView>
                     </LinearLayout>
 
@@ -160,11 +160,13 @@
                 </com.github.florent37.expansionpanel.ExpansionLayout>
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
+
                 <com.github.florent37.expansionpanel.ExpansionHeader
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,145 +178,166 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/contact_info"
+                        android:drawablePadding="10dp"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:textSize="18sp"
-                        android:drawablePadding="10dp"
-                        android:drawableLeft="@drawable/contact_info"
-                        android:text="Contact Information"/>
+                        android:text="Contact Information"
+                        android:textSize="18sp"/>
+
                     <android.support.v7.widget.AppCompatImageView
-                        android:adjustViewBounds="true"
                         android:id="@+id/headerIndicator2"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
                         android:layout_width="wrap_content"
-                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginLeft="16dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp"/>
                 </com.github.florent37.expansionpanel.ExpansionHeader>
+
                 <com.github.florent37.expansionpanel.ExpansionLayout
                     android:id="@+id/expansionLayout2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_white"
                     android:layout_marginTop="5dp"
-                    android:layout_width="match_parent">
+                    android:background="@drawable/rounded_white">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_white">
+
                         <android.support.v7.widget.CardView
                             xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="20dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:padding="10dp"
                                     >
+
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
                                         android:padding="10dp"
                                         android:src="@drawable/ic_phone_black_24dp"/>
+
                                     <LinearLayout
-                                        android:layout_marginTop="13dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="13dp"
                                         android:orientation="horizontal">
+
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
+
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:textSize="16sp"
-                                                android:text="Personal : "/>
+                                                android:text="Personal : "
+                                                android:textSize="16sp"/>
+
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:paddingTop="5dp"
-                                                android:textSize="16sp"
-                                                android:text="Work :"/>
+                                                android:text="Work :"
+                                                android:textSize="16sp"/>
                                         </LinearLayout>
+
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:paddingLeft="15dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:paddingLeft="15dp">
+
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:textSize="16sp"
-                                                android:text="+90 555 5555 55"/>
+                                                android:text="+90 555 5555 55"
+                                                android:textSize="16sp"/>
+
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:paddingTop="5dp"
-                                                android:textSize="16sp"
-                                                android:text="+90 555 5555 55"/>
+                                                android:text="+90 555 5555 55"
+                                                android:textSize="16sp"/>
                                         </LinearLayout>
                                     </LinearLayout>
                                 </LinearLayout>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:padding="10dp"
                                     >
+
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
                                         android:padding="10dp"
                                         android:src="@drawable/ic_place_black_24dp"/>
+
                                     <LinearLayout
-                                        android:layout_marginTop="13dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="13dp"
                                         android:orientation="horizontal">
+
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
+
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:textSize="16sp"
-                                                android:text="Address : "/>
+                                                android:text="Address : "
+                                                android:textSize="16sp"/>
                                         </LinearLayout>
+
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:paddingLeft="15dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:paddingLeft="15dp">
+
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:textSize="16sp"
-                                                android:inputType="textMultiLine"
                                                 android:gravity="left"
-                                                android:text="Full Address here"/>
+                                                android:inputType="textMultiLine"
+                                                android:text="Full Address here"
+                                                android:textSize="16sp"/>
                                         </LinearLayout>
                                     </LinearLayout>
                                 </LinearLayout>
+
                                 <Button
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/colorPrimary"
-                                    android:layout_margin="10dp"
-                                    android:paddingHorizontal="15dp"
-                                    android:background="@drawable/rounded_white"
                                     android:layout_gravity="center"
-                                    android:text="See on map"/>
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_white"
+                                    android:paddingHorizontal="15dp"
+                                    android:text="See on map"
+                                    android:textColor="@color/colorPrimary"/>
                             </LinearLayout>
-
 
 
                         </android.support.v7.widget.CardView>
@@ -329,22 +352,209 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                android:background="@drawable/rounded_white">
+                android:background="@drawable/rounded_white"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/time_blue"
+                    android:drawablePadding="10dp"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
-                    android:textSize="18sp"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/time_blue"
                     android:text="Shedule"
+                    android:textSize="18sp"
                     />
 
             </LinearLayout>
-        </LinearLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!-- TODO Add the comments here -->
+            </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <com.github.florent37.expansionpanel.ExpansionHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_white"
+                    app:expansion_headerIndicator="@id/headerIndicator3"
+                    app:expansion_layout="@id/expansionLayout3"
+                    app:expansion_toggleOnClick="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/contact_info"
+                        android:drawablePadding="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:text="Contact Information"
+                        android:textSize="18sp"/>
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/headerIndicator3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginLeft="16dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp"/>
+                </com.github.florent37.expansionpanel.ExpansionHeader>
+
+                <com.github.florent37.expansionpanel.ExpansionLayout
+                    android:id="@+id/expansionLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_white">
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_white">
+                            <android.support.v7.widget.CardView
+                                xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                app:cardCornerRadius="20dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:padding="11dp"
+                                            android:layout_gravity="left"
+                                            android:layout_marginLeft="5dp"
+                                            android:src="@drawable/rating_ico"/>
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="10dp"
+                                            android:orientation="horizontal">
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="4dp"
+                                                android:textSize="17sp"
+                                                android:text="Rating :"
+                                                />
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_marginEnd="5dp">
+                                                <com.hsalf.smilerating.SmileRating
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"/>
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:padding="11dp"
+                                            android:layout_gravity="left"
+                                            android:layout_marginLeft="5dp"
+                                            android:src="@drawable/ic_comment_black_24dp"/>
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="10dp"
+                                            android:orientation="horizontal">
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="4dp"
+                                                android:textSize="17sp"
+                                                android:text="Review :"
+                                                />
+                                            <View
+                                                android:layout_width="match_parent"
+                                                android:layout_height="1dp"
+                                                android:layout_marginLeft="15dp"
+                                                android:layout_marginRight="110dp"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_gravity="center"
+                                                android:background="@color/darkblue"></View>
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginBottom="10dp">
+                                        <LinearLayout
+                                            android:layout_width="280dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="20dp"
+                                            android:orientation="vertical"
+                                            >
+                                            <MultiAutoCompleteTextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="90dp"
+                                                android:layout_marginTop="15dp"
+                                                android:background="@drawable/bio_background"
+                                                android:drawablePadding="5dp"
+                                                android:hint="Comment"
+                                                android:paddingLeft="@null"
+                                                android:paddingStart="10dp"
+                                                android:textColor="#000"
+                                                android:textCursorDrawable="@null"
+                                                android:textSize="15sp" />
+
+                                        </LinearLayout>
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="bottom"
+                                            android:layout_marginBottom="2dp"
+                                            android:layout_marginLeft="5dp">
+                                            <Button
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="bottom"
+                                                android:background="@drawable/rounded_white"
+                                                android:text="Submit"
+                                                android:textColor="@color/colorPrimary"/>
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+                    </ScrollView>
+
+
+
+                </com.github.florent37.expansionpanel.ExpansionLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </ScrollView>
