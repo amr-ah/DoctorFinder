@@ -25,7 +25,8 @@
         <activity android:name=".DoctorSignup"/>
         <activity android:name=".DoctorMenu"/>
         <activity android:name=".search"/>
-        <activity android:name=".DoctorProfile">
+        <activity android:name=".DoctorProfile"
+                  android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".PatientMenu">
         </activity>
