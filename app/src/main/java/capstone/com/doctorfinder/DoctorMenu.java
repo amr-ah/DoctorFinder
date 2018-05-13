@@ -14,15 +14,12 @@ import com.google.firebase.auth.FirebaseAuth;
 public class DoctorMenu extends AppCompatActivity {
 
 
-   // android:id="@+id/ScheduleCardView"
     private CardView ScheduleCardView;
     private CardView ProfileCardView;
     private CardView SettingsCardView;
     private CardView SignOutCardView;
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

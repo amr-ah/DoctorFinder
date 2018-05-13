@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
                 <android.support.v7.widget.CardView
+                    android:id="@+id/SearchCardView"
                     android:layout_width="140dp"
                     android:layout_height="180dp"
                     android:layout_margin="10dp"
@@ -78,6 +79,7 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    android:id="@+id/FilterCardView"
                     android:layout_width="140dp"
                     android:layout_height="180dp"
                     android:layout_margin="10dp"
@@ -121,6 +123,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <android.support.v7.widget.CardView
+                    android:id="@+id/PSettingsCardView"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -180,6 +183,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <android.support.v7.widget.CardView
+                    android:id="@+id/PSignOutCardView"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
