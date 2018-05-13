@@ -20,15 +20,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
-public class search extends AppCompatActivity
-{
+public class search extends AppCompatActivity {
     private ArrayList<String> Names = new ArrayList<>();
     private ArrayList<String> Images = new ArrayList<>();
     private ArrayList<String> Addresses = new ArrayList<>();
     private ArrayList<String> DUIDs = new ArrayList<>();
     private ArrayList<Double> ratings = new ArrayList<>();
+    private ArrayList<String> result = new ArrayList<>();
 
     private AutoCompleteTextView SearchTextView;
     private Button SearchButton;
@@ -41,17 +42,16 @@ public class search extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //This part is to change the color of the status bar to match the background ( works only for lollipop or above !!! )
+        //TODO This part is to change the color of the status bar to match the background ( works only for lollipop or above !!! )
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this,R.color.myBlue));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.myBlue));
         }
 
 
-
-        SearchTextView = (AutoCompleteTextView)findViewById(R.id.SearchTextView);
+        SearchTextView = (AutoCompleteTextView) findViewById(R.id.SearchTextView);
         SearchButton = (Button) findViewById(R.id.SearchButton);
         recyclerView = (RecyclerView) findViewById(R.id.result_list);
         doctorReference = FirebaseDatabase.getInstance().getReference("doctors");
@@ -67,29 +67,22 @@ public class search extends AppCompatActivity
         });
     }
 
-    private void DoctorSearch(final String S) {
+    private void DoctorSearch(final String SearchString) {
 
-        //TODO (annas) design the items for the recyclelistview so i can use it here
-        //TODO retrieve the doctors info according to the searched terms (look into the tags and the category of each doctor)
 
-        databaseReference.child("tags").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("doctors").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot tags) {
+            public void onDataChange(DataSnapshot doctors) {
 
+                result.clear();
+                for (DataSnapshot doctor : doctors.getChildren()) {
+                    ArrayList<String> tags = (ArrayList<String>) doctor.child("tags").getValue();
+                    for (String tag : tags) {
+                        if (tag.contains(SearchString) && result.contains(doctor.getKey()) == false) {
+                            result.add(doctor.getKey());
 
-                for (DataSnapshot tag : tags.getChildren()){
-
-                   if(tag.getKey().trim().equals(S.trim()))
-                   {
-
-                       for (DataSnapshot snapshot : tag.getChildren())
-                       {
-                           //TODO send this to add doctor so it adds doctors with this ID to the list
-                           Toast.makeText(search.this,"ID =" +snapshot.getValue(), Toast.LENGTH_SHORT).show();
-                           //addDoctor();
-                       }
-
-                   }
+                        }
+                    }
                 }
 
             }
@@ -99,42 +92,45 @@ public class search extends AppCompatActivity
 
             }
         });
+
+        addDoctor(result);
     }
-    void addDoctor(String ID)
-    {
-        Toast.makeText(search.this, ID+"matched", Toast.LENGTH_SHORT).show();
-       /* doctorReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            Names.clear();
-                            Images.clear();
-                            DUIDs.clear();
-                            Addresses.clear();
-                            ratings.clear();
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                            {
+    void addDoctor(final ArrayList<String> result) {
 
-                                Names.add(snapshot.child("full name").getValue(String.class));
-                                Images.add(snapshot.child("image").getValue(String.class));
-                                DUIDs.add(snapshot.getKey());
-                                Addresses.add(snapshot.child("address").getValue(String.class));
-                                //TODO look for how you can cast to a double
-                                ratings.add(snapshot.child("rating").getValue(Double.class));
-                                initRecycler();
-                            }
-                        }
+        databaseReference.child("doctors").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot doctors) {
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {}
-                    });*/
+
+                Names.clear();
+                Images.clear();
+                DUIDs.clear();
+                Addresses.clear();
+                ratings.clear();
+                for (DataSnapshot doctor : doctors.getChildren()) {
+                    ArrayList<String> tags = (ArrayList<String>) doctor.child("tags").getValue();
+                    if (result.contains(doctor.getKey())) {
+
+                        Names.add(doctor.child("full name").getValue(String.class));
+                        Images.add(doctor.child("image").getValue(String.class));
+                        //DUIDs.add(doctor.getKey());
+                        Addresses.add(doctor.child("address").getValue(String.class));
+                        ratings.add(doctor.child("rating").getValue(Double.class));
+                        initRecycler();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 
     void initRecycler() {
         RecyclerView recyclerView = findViewById(R.id.result_list);
-        //TODO send arrays here
-        SearchRVAdapter adapter = new SearchRVAdapter(this,Names,Images,Addresses,ratings);
+        SearchRVAdapter adapter = new SearchRVAdapter(this, Names, Images, Addresses, ratings);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

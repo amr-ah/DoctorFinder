@@ -158,10 +158,8 @@ public class DoctorSignup extends AppCompatActivity {
                             int c = 0;
 
                             while (tags.size() > c) {
-                                //TODO find out a way to put tags in the database in a batter seperate way
                                 String element = firebaseAuth.getCurrentUser().getUid().toString();
                                 mDatabase.child("tags").child(tags.get(c)).child(element).setValue(element);
-
                                 c++;
                             }
                             mDatabase.child("doctors").child(firebaseAuth.getCurrentUser().getUid()).child("full name").setValue(FullName);

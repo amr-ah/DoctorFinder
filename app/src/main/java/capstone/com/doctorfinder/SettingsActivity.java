@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    boolean isDoctor = true;
+    boolean isDoctor = false;
     LinearLayout mLinearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

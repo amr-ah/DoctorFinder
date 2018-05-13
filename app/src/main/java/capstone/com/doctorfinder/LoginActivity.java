@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -50,11 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void login()
-    {
-
-        Intent doctorLogin = new Intent(LoginActivity.this,search.class);
-        startActivity(doctorLogin);
+    public void login() {
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
@@ -83,12 +80,13 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
-                                    Intent PatientLogin = new Intent(LoginActivity.this,PatientMenu.class);
+                                if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim()) == true) {
+                                    Intent PatientLogin = new Intent(LoginActivity.this, PatientMenu.class);
                                     startActivity(PatientLogin);
                                 }
                             }
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
@@ -96,18 +94,17 @@ public class LoginActivity extends AppCompatActivity {
                     });
                     mDatabase.child("doctors").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot)
-                        {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                            {
-                                if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim())==true) {
-                                    Intent doctorLogin = new Intent(LoginActivity.this,DoctorMenu.class);
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim()) == true) {
+                                    Intent doctorLogin = new Intent(LoginActivity.this, DoctorMenu.class);
                                     startActivity(doctorLogin);
                                 }
                             }
                         }
+
                         @Override
-                        public void onCancelled(DatabaseError databaseError){
+                        public void onCancelled(DatabaseError databaseError) {
                         }
 
                     });
