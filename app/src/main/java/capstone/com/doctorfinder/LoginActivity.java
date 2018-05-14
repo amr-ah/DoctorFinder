@@ -52,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
+
+        //TODO check the user type then redirect to the appropriate activity!
+
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
@@ -127,4 +130,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void resetPassword(View view) {
+        Intent i = new Intent(LoginActivity.this,RetrievePassword.class);
+        startActivity(i);
+    }
 }

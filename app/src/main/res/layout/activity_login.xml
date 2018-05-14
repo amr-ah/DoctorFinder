@@ -87,7 +87,8 @@
                 android:text="Forgot your password ?"
                 android:textStyle="bold"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:onClick="resetPassword"/>
 
         </LinearLayout>
 
