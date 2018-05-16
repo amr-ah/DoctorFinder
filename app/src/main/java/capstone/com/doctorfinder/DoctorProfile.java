@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,8 +34,11 @@ public class DoctorProfile extends AppCompatActivity {
     private TextView rating;
     private CircleImageView image;
     private Button MapButton;
+    private Button submitButton;
     private TextView bio;
     private String addressString;
+    private String D_ID;
+    private MultiAutoCompleteTextView comment;
 
     private Context mContext;
 
@@ -46,8 +50,8 @@ public class DoctorProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
 
-        //TODO get DOctor ID instead of fixed value
-        String D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
+        //TODO get Doctor ID instead of fixed value
+        D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
 
         //TODO check the documentation for the expander in here https://android-arsenal.com/details/1/6662
         mSmileRating = findViewById(R.id.smileyRating);
@@ -65,13 +69,8 @@ public class DoctorProfile extends AppCompatActivity {
         phoneNum = (TextView) findViewById(R.id.DPhoneNumber);
         workNum = (TextView) findViewById(R.id.DWorkNumber);
         address = (TextView) findViewById(R.id.DAdressTextView);
-        MapButton = (Button) findViewById(R.id.mapButton);
-        MapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMap();
-            }
-        });
+
+        comment = (MultiAutoCompleteTextView) findViewById(R.id.CommentTextView);
 
         mDatabase.child("doctors").child(D_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -86,7 +85,6 @@ public class DoctorProfile extends AppCompatActivity {
                 rating.setText(doctor.child("rating").getValue(Double.class).toString());
 
                 Glide.with(mContext).load(doctor.child("image").getValue(String.class)).into(image);
-
             }
 
             @Override
@@ -94,6 +92,39 @@ public class DoctorProfile extends AppCompatActivity {
 
             }
         });
+
+
+        MapButton = (Button) findViewById(R.id.mapButton);
+        MapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMap();
+            }
+        });
+        submitButton = (Button) findViewById(R.id.submit);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitComment();
+            }
+        });
+    }
+
+    private void submitComment()
+    {
+
+        //TODO get Patient ID instead of fixed value
+        final String P_ID = "JImrwzglLjMB9AkdNgp7SQYw78X2";
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot doctor) {
+                mDatabase.child("doctors").child(D_ID).child("reviews").child(P_ID).child("comment").setValue(comment.getText().toString());
+            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
     }
 
     private void openMap() {
