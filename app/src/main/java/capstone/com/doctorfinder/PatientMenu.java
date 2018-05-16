@@ -35,8 +35,6 @@ public class PatientMenu extends AppCompatActivity {
             window.setStatusBarColor(ContextCompat.getColor(this,R.color.myBlue));
         }
 
-
-
         SearchCardView = (CardView) findViewById(R.id.SearchCardView);
         SearchCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
             Intent settings = new Intent(PatientMenu.this,search.class);

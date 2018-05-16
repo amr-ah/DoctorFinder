@@ -34,7 +34,8 @@ public class DoctorMenu extends AppCompatActivity {
 
         ProfileCardView = (CardView) findViewById(R.id.ProfileCardView);
         ProfileCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
-            //TODO profile activity
+            Intent profile = new Intent(DoctorMenu.this,DoctorProfile.class);
+            startActivity(profile);
         }});
 
         SettingsCardView = (CardView) findViewById(R.id.SettingsCardView);
