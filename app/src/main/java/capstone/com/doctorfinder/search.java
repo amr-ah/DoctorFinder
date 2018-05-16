@@ -80,7 +80,6 @@ public class search extends AppCompatActivity {
                     for (String tag : tags) {
                         if (tag.contains(SearchString) && result.contains(doctor.getKey()) == false) {
                             result.add(doctor.getKey());
-
                         }
                     }
                 }
@@ -121,6 +120,7 @@ public class search extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }

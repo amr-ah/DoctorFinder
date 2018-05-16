@@ -53,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
 
-        //TODO check the user type then redirect to the appropriate activity!
-
+        Intent profile = new Intent(LoginActivity.this,DoctorProfile.class);
+        startActivity(profile);
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
 
