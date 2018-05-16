@@ -39,18 +39,20 @@ public class PatientMenu extends AppCompatActivity {
 
         SearchCardView = (CardView) findViewById(R.id.SearchCardView);
         SearchCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
-            Intent settings = new Intent(PatientMenu.this,search.class);
-            startActivity(settings);
+            Intent search = new Intent(PatientMenu.this,search.class);
+            startActivity(search);
         }});
 
         FilterCardView = (CardView) findViewById(R.id.FilterCardView);
         FilterCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
-            //TODO Filter activity
+            Intent filter = new Intent(PatientMenu.this,FilterActivity.class);
+            startActivity(filter);
         }});
 
         PSettingsCardView = (CardView) findViewById(R.id.PSettingsCardView);
         PSettingsCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
-            //TODO patient settings
+            Intent settings = new Intent(PatientMenu.this, SettingsActivity.class);
+            startActivity(settings);
         }});
 
         PSignOutCardView = (CardView) findViewById(R.id.PSignOutCardView);
