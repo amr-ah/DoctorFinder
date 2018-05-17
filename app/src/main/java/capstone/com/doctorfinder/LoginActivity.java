@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
 
-        Intent profile = new Intent(LoginActivity.this,FilterActivity.class);
+        Intent profile = new Intent(LoginActivity.this,DoctorAccount.class);
         startActivity(profile);
         String Email = EmailTextView.getText().toString().trim();
         String Password = PasswordTextView.getText().toString().trim();
