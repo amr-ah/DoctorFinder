@@ -45,7 +45,7 @@ public class CommentsRVAdapter extends RecyclerView.Adapter<CommentsRVAdapter.Vi
         //Glide.with(mContext).load(Images.get(position)).into(holder.image);
         holder.name.setText(Names.get(position));
         //TODO set the rating in the smileyView here
-        //holder.rating.setSelectedSmile();
+        holder.rating.setSelectedSmile(ratings.get(position).intValue()-1);
         holder.comment.setText(Comments.get(position));
 
 
@@ -72,6 +72,8 @@ public class CommentsRVAdapter extends RecyclerView.Adapter<CommentsRVAdapter.Vi
 
             name = itemView.findViewById(R.id.CNameTextView);
             rating = itemView.findViewById(R.id.Csmile_rating);
+            //TODO make the smiley slider nonchangable in comments in the list view from the CommentRVADAPTER
+            //this didnt work
             rating.setClickable(false);
            // image = itemView.findViewById(R.id.CCircleImage);
             comment = itemView.findViewById(R.id.CCommentTextView);

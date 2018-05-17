@@ -127,8 +127,6 @@ public class DoctorProfile extends AppCompatActivity {
                     }
 
                     //TODO refresh the recycle view (i dont know how)
-                    //TODO make the smiley slider nonchangable in comments in the list view from the CommentRVADAPTER
-                    //TODO add patient name using patient id
 
                 }
                 initRecycler();
