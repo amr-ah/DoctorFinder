@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.content.SharedPreferences;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,11 +62,14 @@ public class DoctorProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("search",MODE_PRIVATE);
+        D_ID = sharedPreferences.getString("userId","");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
 
         //TODO get Doctor ID instead of fixed value
-        D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
+        //D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
 
         //TODO check the documentation for the expander in here https://android-arsenal.com/details/1/6662
         mSmileRating = findViewById(R.id.smileyRating);
@@ -123,10 +127,8 @@ public class DoctorProfile extends AppCompatActivity {
                     //Names.add(snapshot.child("patient").child(P_ID).child("full name").child(P_ID).getValue(String.class));
                     //Ratings.addAll();
                     //TODO add patient name using patient id
-
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -167,7 +169,6 @@ public class DoctorProfile extends AppCompatActivity {
         } else {
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
-
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     PComments.clear();
@@ -180,6 +181,8 @@ public class DoctorProfile extends AppCompatActivity {
                     mDatabase.child("doctors").child(D_ID).child("comments").child(P_ID).setValue(PComments);
                     mDatabase.child("doctors").child(D_ID).child("reviews").child(P_ID).setValue(Ratings);
                     Toast.makeText(DoctorProfile.this, "comment and review submitted", Toast.LENGTH_SHORT).show();
+                    mSmileRating.setSelectedSmile(BaseRating.OKAY);
+                    comment.setText("");
                     //updateRating();
                 }
 
