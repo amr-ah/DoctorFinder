@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import org.ankit.gpslibrary.MyTracker;
@@ -16,6 +17,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class DoctorAccount extends AppCompatActivity {
 
     int LOCATION_ACCESS;
+    double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,6 @@ public class DoctorAccount extends AppCompatActivity {
     public void getCurrentLocation(View view) {
 
         String[] perms = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION};
-        double longitude, latitude;
 
         if (EasyPermissions.hasPermissions(this,perms))
         {
@@ -36,6 +37,7 @@ public class DoctorAccount extends AppCompatActivity {
 
             longitude = position.getLongitude();
             latitude = position.getLatitude();
+           Log.e("Permission",longitude + " " + latitude);
         }
         else
         {
