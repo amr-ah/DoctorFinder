@@ -3,6 +3,7 @@ package capstone.com.doctorfinder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,8 +57,11 @@ public class DoctorProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("search",MODE_PRIVATE);
+        D_ID = sharedPreferences.getString("userId","");
+
         //TODO get Doctor ID instead of fixed value
-        D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
+        //D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
 
         //TODO check the documentation for the expander in here https://android-arsenal.com/details/1/6662
         mSmileRating = findViewById(R.id.smileyRating);
@@ -138,6 +142,8 @@ public class DoctorProfile extends AppCompatActivity {
                     mDatabase.child("doctors").child(D_ID).child("comment").setValue(comment.getText().toString());
                     mDatabase.child("doctors").child(D_ID).child("reviews").child(P_ID).setValue(mSmileRating.getRating());
                     Toast.makeText(DoctorProfile.this, "comment and review submitted", Toast.LENGTH_SHORT).show();
+                    mSmileRating.setSelectedSmile(BaseRating.OKAY);
+                    comment.setText("");
                     updateRating();
                 }
                 @Override

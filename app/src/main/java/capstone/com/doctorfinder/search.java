@@ -42,7 +42,7 @@ public class search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //TODO This part is to change the color of the status bar to match the background ( works only for lollipop or above !!! )
+        // This part is to change the color of the status bar to match the background ( works only for lollipop or above !!! )
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -113,7 +113,7 @@ public class search extends AppCompatActivity {
 
                         Names.add(doctor.child("full name").getValue(String.class));
                         Images.add(doctor.child("image").getValue(String.class));
-                        //DUIDs.add(doctor.getKey());
+                        DUIDs.add(doctor.getKey());
                         Addresses.add(doctor.child("address").getValue(String.class));
                         ratings.add(doctor.child("rating").getValue(Double.class));
                         initRecycler();
@@ -130,7 +130,7 @@ public class search extends AppCompatActivity {
 
     void initRecycler() {
         RecyclerView recyclerView = findViewById(R.id.result_list);
-        SearchRVAdapter adapter = new SearchRVAdapter(this, Names, Images, Addresses, ratings);
+        SearchRVAdapter adapter = new SearchRVAdapter(this, Names, Images, Addresses, ratings,DUIDs);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
