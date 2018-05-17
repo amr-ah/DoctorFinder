@@ -30,8 +30,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DoctorProfile extends AppCompatActivity
-{
+public class DoctorProfile extends AppCompatActivity {
 
     SmileRating mSmileRating;
     private TextView name;
@@ -57,6 +56,7 @@ public class DoctorProfile extends AppCompatActivity
     private ArrayList<String> Names = new ArrayList<>();
     private ArrayList<Double> Ratings = new ArrayList<>();
     private ArrayList<String> Comments = new ArrayList<>();
+    private ArrayList<String> PComments = new ArrayList<>();
 
 
     @Override
@@ -85,9 +85,7 @@ public class DoctorProfile extends AppCompatActivity
         address = (TextView) findViewById(R.id.DAdressTextView);
 
         comment = (MultiAutoCompleteTextView) findViewById(R.id.CommentTextView);
-        mSmileRating = (SmileRating)  findViewById(R.id.smileyRating);
-
-
+        mSmileRating = (SmileRating) findViewById(R.id.smileyRating);
 
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,24 +100,30 @@ public class DoctorProfile extends AppCompatActivity
                 address.setText(addressString);
                 rating.setText(snapshot.child("doctors").child(D_ID).child("rating").getValue(Double.class).toString());
 
+                //to get name from PID
+                //snapshot.child("patient").child(P_ID).child("full name").getValue(String.class);
                 Glide.with(mContext).load(snapshot.child("doctors").child(D_ID).child("image").getValue(String.class)).into(image);
 
                 Names.clear();
                 Ratings.clear();
                 Comments.clear();
 
+
                 for (DataSnapshot comment : snapshot.child("doctors").child(D_ID).child("comments").getChildren()) {
 
-                    //Comments.add(comment.child(P_ID).getValue());
+                    for (String text : (ArrayList<String>) comment.getValue()) {
+                        String n = snapshot.child("patients").child(comment.getKey()).child("full name").getValue(String.class);
+                        Names.add(n);
+                        Comments.add(text);
+
+                    }
+                    initRecycler();
                     //TODO test rating more
-                    Ratings.add(snapshot.child("doctors").child(D_ID).child("reviews").child(P_ID).getValue(Double.class));
                     //TODO change this to nonstatic
-                    Names.add(snapshot.child("patient").child(P_ID).child("full name").child(P_ID).getValue(String.class));
-
-
+                    //Names.add(snapshot.child("patient").child(P_ID).child("full name").child(P_ID).getValue(String.class));
+                    //Ratings.addAll();
                     //TODO add patient name using patient id
 
-                    initRecycler();
                 }
             }
 
@@ -146,34 +150,39 @@ public class DoctorProfile extends AppCompatActivity
         });
     }
 
-    private void initRecycler()
-    {
+    private void initRecycler() {
         RecyclerView recyclerView = findViewById(R.id.CommentsList);
-        CommentsRVAdapter adapter = new CommentsRVAdapter(this, Names,Ratings,Comments);
+        CommentsRVAdapter adapter = new CommentsRVAdapter(this, Names, Ratings, Comments);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void submitComment()
-    {
+    private void submitComment() {
 
         //TODO get Patient ID instead of fixed value
 
-        if(TextUtils.isEmpty(comment.getText()))
-        {
+        if (TextUtils.isEmpty(comment.getText())) {
             updateRating();
             Toast.makeText(DoctorProfile.this, "only review submitted", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
                 @Override
-                public void onDataChange(DataSnapshot doctor) {
-                    mDatabase.child("doctors").child(D_ID).child("comments").child(P_ID).child(comment.getText().toString()).setValue(comment.getText().toString());
-                    mDatabase.child("doctors").child(D_ID).child("reviews").child(P_ID).setValue(mSmileRating.getRating());
+                public void onDataChange(DataSnapshot snapshot) {
+                    PComments.clear();
+
+                    for (DataSnapshot comment : snapshot.child("doctors").child(D_ID).child("comments").child(P_ID).getChildren()) {
+                        PComments.add(comment.getValue(String.class));
+                    }
+                    PComments.add(comment.getText().toString());
+                    Ratings.add((double) mSmileRating.getRating());
+                    mDatabase.child("doctors").child(D_ID).child("comments").child(P_ID).setValue(PComments);
+                    mDatabase.child("doctors").child(D_ID).child("reviews").child(P_ID).setValue(Ratings);
                     Toast.makeText(DoctorProfile.this, "comment and review submitted", Toast.LENGTH_SHORT).show();
-                    updateRating();
+                    //updateRating();
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
@@ -184,10 +193,9 @@ public class DoctorProfile extends AppCompatActivity
 
     }
 
-    private void updateRating()
-    {
-        rate =0;
-        count=0;
+    private void updateRating() {
+        rate = 0;
+        count = 0;
         mDatabase.child("doctors").child(D_ID).child("reviews").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
 
@@ -198,11 +206,11 @@ public class DoctorProfile extends AppCompatActivity
                 for (DataSnapshot review : reviews.getChildren()) {
 
                     rate += review.getValue(Integer.class);
-                    count ++;
+                    count++;
                 }
 
-                double r = rate/count;
-               //mDatabase.child("doctors").child(D_ID).child("rating").setValue(rating);
+                double r = rate / count;
+                //mDatabase.child("doctors").child(D_ID).child("rating").setValue(rating);
                 mDatabase.child("doctors").child(D_ID).child("rating").setValue(r);
                 rating.setText(Double.toString(r));
 
@@ -213,14 +221,9 @@ public class DoctorProfile extends AppCompatActivity
 
             }
         });
-
-
-
-
     }
 
-    private void openMap()
-    {
+    private void openMap() {
         //TODO get the co-ordinations and redirect to the maps app
         //this code opens map intent with a given text location
 
