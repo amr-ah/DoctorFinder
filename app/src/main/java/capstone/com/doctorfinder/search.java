@@ -115,6 +115,8 @@ public class search extends AppCompatActivity {
                         Images.add(doctor.child("image").getValue(String.class));
                         DUIDs.add(doctor.getKey());
                         Addresses.add(doctor.child("address").getValue(String.class));
+                        //TODO fix this
+                        //ratings.add(
                         ratings.add(doctor.child("rating").getValue(Double.class));
                         initRecycler();
                     }
