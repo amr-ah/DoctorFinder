@@ -82,13 +82,9 @@ public class DoctorAccount extends AppCompatActivity {
                 saveChanges();
             }
         });
-
-
-
     }
 
-    private void saveChanges()
-    {
+    private void saveChanges() {
         //TODO UPDATE DATABASE
         mDatabase.child("doctors").child(D_ID).child("address").setValue(oldAddress.getText().toString().trim());
         mDatabase.child("doctors").child(D_ID).child("phone number").setValue(oldPersonalPhone.getText().toString().trim());
