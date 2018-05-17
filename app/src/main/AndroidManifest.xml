@@ -37,6 +37,8 @@
         </activity>
         <activity android:name=".FilterActivity">
         </activity>
+        <activity android:name=".DoctorAccount">
+        </activity>
     </application>
 
 </manifest>
