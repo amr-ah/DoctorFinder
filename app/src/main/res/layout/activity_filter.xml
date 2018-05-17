@@ -92,7 +92,8 @@
         android:text="Save"
         android:textColor="@color/myWhite"
         android:textSize="17sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:onClick="saveRating"/>
 
 
 </LinearLayout>

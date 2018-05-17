@@ -1,10 +1,12 @@
 package capstone.com.doctorfinder;
 
 import android.*;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -18,6 +20,7 @@ public class FilterActivity extends AppCompatActivity {
 
     private SmileRating mSmileRating;
     private ProgressView mProgressView;
+    int selectedRating, selectedDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +47,17 @@ public class FilterActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void saveRating(View view) {
+
+        selectedRating = mSmileRating.getRating();
+        selectedDistance = mProgressView.getProgress();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("rating",selectedRating);
+        editor.putInt("distance",selectedDistance);
+        editor.commit();
     }
 }
