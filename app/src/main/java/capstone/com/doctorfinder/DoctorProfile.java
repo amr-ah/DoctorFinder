@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,28 +50,32 @@ public class DoctorProfile extends AppCompatActivity {
     private MultiAutoCompleteTextView comment;
     int rate;
     int count;
-    final String P_ID = "JImrwzglLjMB9AkdNgp7SQYw78X2";
+    String P_ID ;
     private Context mContext;
 
     private DatabaseReference mDatabase;
+    private FirebaseAuth firebaseAuth;
 
 
     private ArrayList<String> Names = new ArrayList<>();
     private ArrayList<Double> Ratings = new ArrayList<>();
     private ArrayList<String> Comments = new ArrayList<>();
     private ArrayList<String> PComments = new ArrayList<>();
+    private ArrayList<Double> PRating = new ArrayList<>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+        //TODO change this
         SharedPreferences sharedPreferences = getSharedPreferences("search",MODE_PRIVATE);
         D_ID = sharedPreferences.getString("userId","");
+        firebaseAuth = firebaseAuth.getInstance();
+        P_ID = firebaseAuth.getCurrentUser().getUid().trim();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
-
-        //TODO get Doctor ID instead of fixed value
-        //D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
 
         //TODO check the documentation for the expander in here https://android-arsenal.com/details/1/6662
         mSmileRating = findViewById(R.id.smileyRating);
@@ -91,7 +97,6 @@ public class DoctorProfile extends AppCompatActivity {
         comment = (MultiAutoCompleteTextView) findViewById(R.id.CommentTextView);
         mSmileRating = (SmileRating) findViewById(R.id.smileyRating);
 
-
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -104,9 +109,9 @@ public class DoctorProfile extends AppCompatActivity {
                 address.setText(addressString);
                 rating.setText(snapshot.child("doctors").child(D_ID).child("rating").getValue(Double.class).toString());
 
-                //to get name from PID
+                //TODO get name from PID
                 //snapshot.child("patient").child(P_ID).child("full name").getValue(String.class);
-                Glide.with(mContext).load(snapshot.child("doctors").child(D_ID).child("image").getValue(String.class)).into(image);
+               Glide.with(mContext).load(snapshot.child("doctors").child(D_ID).child("image").getValue(String.class)).into(image);
 
                 Names.clear();
                 Ratings.clear();
@@ -117,16 +122,10 @@ public class DoctorProfile extends AppCompatActivity {
 
                     for (String text : (ArrayList<String>) comment.getValue()) {
                         String n = snapshot.child("patients").child(comment.getKey()).child("full name").getValue(String.class);
-                        Names.add(n);
-                        Comments.add(text);
-
+                        Names.add("name");
+                        Comments.add("comment");
                     }
                     initRecycler();
-                    //TODO test rating more
-                    //TODO change this to nonstatic
-                    //Names.add(snapshot.child("patient").child(P_ID).child("full name").child(P_ID).getValue(String.class));
-                    //Ratings.addAll();
-                    //TODO add patient name using patient id
                 }
             }
             @Override
@@ -172,9 +171,13 @@ public class DoctorProfile extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     PComments.clear();
+                    PRating.clear();
 
                     for (DataSnapshot comment : snapshot.child("doctors").child(D_ID).child("comments").child(P_ID).getChildren()) {
                         PComments.add(comment.getValue(String.class));
+                    }
+                    for (DataSnapshot rating : snapshot.child("doctors").child(D_ID).child("reviews").child(P_ID).getChildren()) {
+                        PRating.add(rating.getValue(Double.class));
                     }
                     PComments.add(comment.getText().toString());
                     Ratings.add((double) mSmileRating.getRating());
@@ -213,7 +216,6 @@ public class DoctorProfile extends AppCompatActivity {
                 }
 
                 double r = rate / count;
-                //mDatabase.child("doctors").child(D_ID).child("rating").setValue(rating);
                 mDatabase.child("doctors").child(D_ID).child("rating").setValue(r);
                 rating.setText(Double.toString(r));
 
