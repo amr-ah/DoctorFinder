@@ -1,5 +1,6 @@
 package capstone.com.doctorfinder;
 
+import android.*;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 
 import app.youkai.progressview.ProgressView;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -37,6 +39,10 @@ public class FilterActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(ContextCompat.getColor(this,R.color.myBlue));
         }
+
+
+
+
 
     }
 }

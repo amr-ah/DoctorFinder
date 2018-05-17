@@ -75,7 +75,6 @@
                 android:layout_height="wrap_content"
                 android:text="7.5"
                 android:textColor="@color/myBlue" />
-
         </LinearLayout>
     </LinearLayout>
 

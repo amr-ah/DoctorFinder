@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class DoctorMenu extends AppCompatActivity {
 
 
-    private CardView ScheduleCardView;
+    private CardView ScheduleCardView, AccountCardView;
     private CardView ProfileCardView;
     private CardView SettingsCardView;
     private CardView SignOutCardView;
@@ -26,6 +26,16 @@ public class DoctorMenu extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_menu);
+
+
+        AccountCardView = findViewById(R.id.AccountCardView);
+        AccountCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent account = new Intent(DoctorMenu.this,DoctorAccount.class);
+                startActivity(account);
+            }
+        });
 
         ScheduleCardView = (CardView) findViewById(R.id.ScheduleCardView);
         ScheduleCardView.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v){
