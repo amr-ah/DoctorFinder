@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +36,7 @@ public class DoctorAccount extends AppCompatActivity {
     AutoCompleteTextView oldPersonalPhone;
     AutoCompleteTextView oldWorkPhone;
     MultiAutoCompleteTextView oldbio;
+    private Button SaveButton;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth firebaseAuth;
@@ -53,7 +56,7 @@ public class DoctorAccount extends AppCompatActivity {
         oldAddress = findViewById(R.id.oldAddress);
         oldbio = findViewById(R.id.oldBio);
 
-        D_ID= firebaseAuth.getCurrentUser().getUid().toString().trim();
+        D_ID = firebaseAuth.getCurrentUser().getUid().toString().trim();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -64,8 +67,6 @@ public class DoctorAccount extends AppCompatActivity {
                 oldWorkPhone.setText(snapshot.child("doctors").child(D_ID).child("work number").getValue(String.class));
                 addressString = snapshot.child("doctors").child(D_ID).child("address").getValue(String.class);
                 oldAddress.setText(addressString);
-
-
             }
 
             @Override
@@ -74,8 +75,26 @@ public class DoctorAccount extends AppCompatActivity {
             }
         });
 
+        SaveButton = (Button) findViewById(R.id.SaveButton);
+        SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveChanges();
+            }
+        });
 
 
+
+    }
+
+    private void saveChanges()
+    {
+        //TODO UPDATE DATABASE
+        mDatabase.child("doctors").child(D_ID).child("address").setValue(oldAddress.getText().toString().trim());
+        mDatabase.child("doctors").child(D_ID).child("phone number").setValue(oldPersonalPhone.getText().toString().trim());
+        mDatabase.child("doctors").child(D_ID).child("work number").setValue(oldWorkPhone.getText().toString().trim());
+        mDatabase.child("doctors").child(D_ID).child("bio").setValue(oldbio.getText().toString().trim());
+        Toast.makeText(DoctorAccount.this, "changes saved", Toast.LENGTH_SHORT).show();
     }
 
     public void getCurrentLocation(View view) {
