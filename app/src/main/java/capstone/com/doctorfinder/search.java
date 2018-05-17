@@ -1,5 +1,6 @@
 package capstone.com.doctorfinder;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class search extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseReference doctorReference;
     private DatabaseReference databaseReference;
+    int minimumRating, maximumDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,12 @@ public class search extends AppCompatActivity {
                 DoctorSearch(SearchTextView.getText().toString().trim());
             }
         });
+
+        //TODO use these values in the search
+        SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+        minimumRating = sharedPreferences.getInt("rating",1);
+        maximumDistance = sharedPreferences.getInt("distance",1);
+
     }
 
     private void DoctorSearch(final String SearchString) {
