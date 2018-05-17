@@ -22,6 +22,7 @@
                 android:layout_marginLeft="10dp"
                 >
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/CCircleImage"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     app:civ_circle_background_color="@color/myBlue"
@@ -37,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/CNameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -59,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp">
                     <com.hsalf.smilerating.SmileRating
-                        android:id="@+id/smile_rating"
+                        android:id="@+id/Csmile_rating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:placeHolderSmileColor="@color/darkblue"/>
@@ -74,6 +76,7 @@
             android:padding="10dp"
             android:background="@drawable/rounded_comment">
             <TextView
+                android:id="@+id/CCommentTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"

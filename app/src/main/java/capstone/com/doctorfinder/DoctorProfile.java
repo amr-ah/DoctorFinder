@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +30,8 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DoctorProfile extends AppCompatActivity {
+public class DoctorProfile extends AppCompatActivity
+{
 
     SmileRating mSmileRating;
     private TextView name;
@@ -49,6 +52,11 @@ public class DoctorProfile extends AppCompatActivity {
     private Context mContext;
 
     private DatabaseReference mDatabase;
+
+
+    private ArrayList<String> Names = new ArrayList<>();
+    private ArrayList<Double> Ratings = new ArrayList<>();
+    private ArrayList<String> Comments = new ArrayList<>();
 
 
     @Override
@@ -82,19 +90,37 @@ public class DoctorProfile extends AppCompatActivity {
 
 
 
-        mDatabase.child("doctors").child(D_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot doctor) {
+            public void onDataChange(DataSnapshot snapshot) {
 
-                name.setText(doctor.child("full name").getValue(String.class));
-                bio.setText(doctor.child("bio").getValue(String.class));
-                phoneNum.setText(doctor.child("phone number").getValue(String.class));
-                workNum.setText(doctor.child("work number").getValue(String.class));
-                addressString = doctor.child("address").getValue(String.class);
+                name.setText(snapshot.child("doctors").child(D_ID).child("full name").getValue(String.class));
+                bio.setText(snapshot.child("doctors").child(D_ID).child("bio").getValue(String.class));
+                phoneNum.setText(snapshot.child("doctors").child(D_ID).child("phone number").getValue(String.class));
+                workNum.setText(snapshot.child("doctors").child(D_ID).child("work number").getValue(String.class));
+                addressString = snapshot.child("doctors").child(D_ID).child("address").getValue(String.class);
                 address.setText(addressString);
-                rating.setText(doctor.child("rating").getValue(Double.class).toString());
+                rating.setText(snapshot.child("doctors").child(D_ID).child("rating").getValue(Double.class).toString());
 
-                Glide.with(mContext).load(doctor.child("image").getValue(String.class)).into(image);
+                Glide.with(mContext).load(snapshot.child("doctors").child(D_ID).child("image").getValue(String.class)).into(image);
+
+                Names.clear();
+                Ratings.clear();
+                Comments.clear();
+
+                for (DataSnapshot comment : snapshot.child("doctors").child(D_ID).child("comments").getChildren()) {
+
+                    //Comments.add(comment.child(P_ID).getValue());
+                    //TODO test rating more
+                    Ratings.add(snapshot.child("doctors").child(D_ID).child("reviews").child(P_ID).getValue(Double.class));
+                    //TODO change this to nonstatic
+                    Names.add(snapshot.child("patient").child(P_ID).child("full name").child(P_ID).getValue(String.class));
+
+
+                    //TODO add patient name using patient id
+
+                    initRecycler();
+                }
             }
 
             @Override
@@ -120,6 +146,14 @@ public class DoctorProfile extends AppCompatActivity {
         });
     }
 
+    private void initRecycler()
+    {
+        RecyclerView recyclerView = findViewById(R.id.CommentsList);
+        CommentsRVAdapter adapter = new CommentsRVAdapter(this, Names,Ratings,Comments);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     private void submitComment()
     {
 
@@ -135,7 +169,7 @@ public class DoctorProfile extends AppCompatActivity {
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot doctor) {
-                    mDatabase.child("doctors").child(D_ID).child("comment").setValue(comment.getText().toString());
+                    mDatabase.child("doctors").child(D_ID).child("comments").child(P_ID).child(comment.getText().toString()).setValue(comment.getText().toString());
                     mDatabase.child("doctors").child(D_ID).child("reviews").child(P_ID).setValue(mSmileRating.getRating());
                     Toast.makeText(DoctorProfile.this, "comment and review submitted", Toast.LENGTH_SHORT).show();
                     updateRating();
@@ -145,7 +179,9 @@ public class DoctorProfile extends AppCompatActivity {
 
                 }
             });
+            initRecycler();
         }
+
     }
 
     private void updateRating()
@@ -164,10 +200,7 @@ public class DoctorProfile extends AppCompatActivity {
                     rate += review.getValue(Integer.class);
                     count ++;
                 }
-               /* if(count==0)
-                {
-                    count=1;
-                }*/
+
                 double r = rate/count;
                //mDatabase.child("doctors").child(D_ID).child("rating").setValue(rating);
                 mDatabase.child("doctors").child(D_ID).child("rating").setValue(r);
@@ -186,7 +219,8 @@ public class DoctorProfile extends AppCompatActivity {
 
     }
 
-    private void openMap() {
+    private void openMap()
+    {
         //TODO get the co-ordinations and redirect to the maps app
         //this code opens map intent with a given text location
 

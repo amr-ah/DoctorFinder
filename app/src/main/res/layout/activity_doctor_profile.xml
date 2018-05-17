@@ -382,6 +382,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/CommentsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <!-- TODO Add the comments here -->
