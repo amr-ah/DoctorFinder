@@ -71,6 +71,7 @@ public class DoctorProfile extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_profile);
 
         firebaseAuth = firebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         SharedPreferences sharedPreferences = getSharedPreferences("search",MODE_PRIVATE);
         D_ID = sharedPreferences.getString("userId","");
 
@@ -99,7 +100,7 @@ public class DoctorProfile extends AppCompatActivity {
 
         P_ID=firebaseAuth.getCurrentUser().getUid().toString().trim();
         //initioalize
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         mContext = this;
 
         rating = (TextView) findViewById(R.id.DRatingTextView);

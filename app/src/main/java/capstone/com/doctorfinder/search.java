@@ -117,14 +117,12 @@ public class search extends AppCompatActivity {
                 ratings.clear();
                 for (DataSnapshot doctor : doctors.getChildren()) {
                     ArrayList<String> tags = (ArrayList<String>) doctor.child("tags").getValue();
-                    if (result.contains(doctor.getKey())) {
+                    if (result.contains(doctor.getKey()) && doctor.child("rating").getValue(Double.class)>=minimumRating-1) {
 
                         Names.add(doctor.child("full name").getValue(String.class));
                         Images.add(doctor.child("image").getValue(String.class));
                         DUIDs.add(doctor.getKey());
                         Addresses.add(doctor.child("address").getValue(String.class));
-                        //TODO fix this
-                        //ratings.add(
                         ratings.add(doctor.child("rating").getValue(Double.class));
                         initRecycler();
                     }

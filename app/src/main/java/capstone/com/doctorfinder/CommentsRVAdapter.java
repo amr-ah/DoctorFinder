@@ -44,7 +44,6 @@ public class CommentsRVAdapter extends RecyclerView.Adapter<CommentsRVAdapter.Vi
 
         //Glide.with(mContext).load(Images.get(position)).into(holder.image);
         holder.name.setText(Names.get(position));
-        //TODO set the rating in the smileyView here
         holder.rating.setSelectedSmile(ratings.get(position).intValue()-1);
         holder.comment.setText(Comments.get(position));
 
