@@ -217,6 +217,38 @@ public class DoctorProfile extends AppCompatActivity {
 
                 }
             });
+
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    Names.clear();
+                    Ratings.clear();
+                    Comments.clear();
+
+
+                    for (DataSnapshot comment : snapshot.child("doctors").child(D_ID).child("comments").getChildren()) {
+
+                        for (String text : (ArrayList<String>) comment.getValue()) {
+                            String n = snapshot.child("patients").child(comment.getKey()).child("full name").getValue(String.class);
+                            Double r = snapshot.child("doctors").child(D_ID).child("reviews").child(comment.getKey()).getValue(Double.class);
+                            Names.add(n);
+                            Comments.add(text);
+                            Ratings.add(r);
+
+                        }
+
+                        //TODO refresh the recycle view (i dont know how)
+
+                    }
+                    initRecycler();
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             initRecycler();
         }
 
