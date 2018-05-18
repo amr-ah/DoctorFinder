@@ -1,5 +1,6 @@
 package capstone.com.doctorfinder;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -11,7 +12,7 @@ import android.widget.LinearLayout;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    boolean isDoctor = false;
+    boolean isDoctor;
     LinearLayout mLinearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,8 @@ public class SettingsActivity extends AppCompatActivity {
         mLinearLayout = findViewById(R.id.settingBackground);
 
         //TODO check the user type (doctor or patient) via sharedPreferences in order to load the appropriate colors
+        SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+        isDoctor = sharedPreferences.getBoolean("isDoctor",false);
         checkUserType(isDoctor);
 
 

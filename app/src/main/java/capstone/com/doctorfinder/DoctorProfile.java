@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,8 @@ public class DoctorProfile extends AppCompatActivity {
     private ArrayList<Double> Ratings = new ArrayList<>();
     private ArrayList<String> Comments = new ArrayList<>();
     private ArrayList<String> PComments = new ArrayList<>();
+    boolean isDoctor;
+    private LinearLayout mLinearLayout;
 
 
     @Override
@@ -70,6 +73,22 @@ public class DoctorProfile extends AppCompatActivity {
         firebaseAuth = firebaseAuth.getInstance();
         SharedPreferences sharedPreferences = getSharedPreferences("search",MODE_PRIVATE);
         D_ID = sharedPreferences.getString("userId","");
+
+        SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+        isDoctor = pref.getBoolean("isDoctor",false);
+
+        mLinearLayout = findViewById(R.id.hiddenLayout);
+
+
+
+        if(isDoctor){
+
+            D_ID = pref.getString("userId","");
+            mLinearLayout.setVisibility(View.GONE);
+
+        }
+
+
         //TODO get Doctor ID instead of fixed value
         //D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";
        // D_ID = "31hy02F9mxV0DiL963uthIFnQ1h2";

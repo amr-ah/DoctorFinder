@@ -1,6 +1,7 @@
 package capstone.com.doctorfinder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -64,6 +65,10 @@ public class DoctorMenu extends AppCompatActivity {
     {
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth.getInstance().signOut();
+        SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("logged",false);
+        editor.commit();
         Intent signout = new Intent(DoctorMenu.this, LoginActivity.class);
         Toast.makeText(DoctorMenu.this, "signed out", Toast.LENGTH_SHORT).show();
         startActivity(signout);

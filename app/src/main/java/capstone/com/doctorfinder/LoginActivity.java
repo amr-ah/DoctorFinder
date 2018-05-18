@@ -1,6 +1,7 @@
 package capstone.com.doctorfinder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -82,6 +83,16 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim()) == true) {
+
+                                    String userId = firebaseAuth.getCurrentUser().getUid().trim().toString();
+
+                                    SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("userId",userId);
+                                    editor.putBoolean("isDoctor",false);
+                                    editor.putBoolean("logged",true);
+                                    editor.commit();
+
                                     Intent PatientLogin = new Intent(LoginActivity.this, PatientMenu.class);
                                     startActivity(PatientLogin);
                                 }
@@ -98,6 +109,16 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 if (snapshot.getKey().trim().equalsIgnoreCase(firebaseAuth.getCurrentUser().getUid().trim()) == true) {
+
+                                    String userId = firebaseAuth.getCurrentUser().getUid().trim().toString();
+
+                                    SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("userId",userId);
+                                    editor.putBoolean("isDoctor",true);
+                                    editor.putBoolean("logged",true);
+                                    editor.commit();
+
                                     Intent doctorLogin = new Intent(LoginActivity.this, DoctorMenu.class);
                                     startActivity(doctorLogin);
                                 }
